@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+    <title>Trainer Profile</title>
+
+</head>
+
+<body>
+
+<h1>USP Fitness Club</h1>
+
+<h2>Trainer Profile</h2>
+
+
+<p>
+    <strong>Staff ID:</strong>
+    <span th:text="${trainer.staffId}"></span>
+</p>
+
+<p>
+    <strong>Name:</strong>
+
+    <span th:text="${trainer.firstName}"></span>
+    <span th:text="${trainer.lastName}"></span>
+</p>
+
+<p>
+    <strong>Email:</strong>
+    <span th:text="${trainer.email}"></span>
+</p>
+
+<p>
+    <strong>Phone:</strong>
+    <span th:text="${trainer.phone}"></span>
+</p>
+
+<p>
+    <strong>Specialization:</strong>
+    <span th:text="${trainer.specialization}"></span>
+</p>
+
+<p>
+    <strong>Username:</strong>
+    <span th:text="${trainer.appUser.username}"></span>
+</p>
+
+
+<form th:action="@{/logout}"
+      method="post">
+    
+    <a th:href="@{/trainer/classes}">
+       My Fitness Classes
+    </a>
+
+    <br><br>
+
+    <button type="submit">
+        Logout
+    </button>
+
+</form>
+
+</body>
+
+</html>

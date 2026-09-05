@@ -1,0 +1,60 @@
+body {
+    background-color: #f5f6f8;
+}
+
+.page-container {
+    padding-top: 35px;
+    padding-bottom: 50px;
+}
+
+.page-title {
+    font-weight: 600;
+}
+
+.card {
+    border: none;
+}
+
+.table th {
+    white-space: nowrap;
+}
+
+.status-approved {
+    color: #198754;
+    font-weight: bold;
+}
+
+.status-pending {
+    color: #fd7e14;
+    font-weight: bold;
+}
+
+.status-rejected {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.status-renter {
+    color: #0d6efd;
+    font-weight: bold;
+}
+
+.form-label {
+    font-weight: 500;
+}
+
+.card {
+    border-radius: 12px;
+}
+
+.navbar-brand {
+    font-weight: 600;
+}
+
+.btn {
+    border-radius: 7px;
+}
+
+.table {
+    margin-bottom: 0;
+}

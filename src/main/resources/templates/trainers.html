@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Trainers - USP Fitness Club</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+<body>
+
+
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
+
+
+<div class="container page-container">
+
+
+    <div class="d-flex justify-content-between
+                align-items-center mb-4">
+
+        <div>
+
+            <h1 class="page-title">
+                Trainers
+            </h1>
+
+            <p class="text-muted mb-0">
+                Manage fitness club trainers
+            </p>
+
+        </div>
+
+
+        <a th:href="@{/trainers/new}"
+           class="btn btn-primary">
+
+            + Add Trainer
+
+        </a>
+
+    </div>
+
+
+    <!-- SUCCESS -->
+
+    <div th:if="${successMessage}"
+         class="alert alert-success alert-dismissible fade show">
+
+        <span th:text="${successMessage}">
+        </span>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+    </div>
+
+
+    <!-- ERROR -->
+
+    <div th:if="${errorMessage}"
+         class="alert alert-danger alert-dismissible fade show">
+
+        <span th:text="${errorMessage}">
+        </span>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+    </div>
+
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <div class="table-responsive">
+
+                <table class="table
+                              table-striped
+                              table-hover
+                              align-middle">
+
+
+                    <thead class="table-dark">
+
+                    <tr>
+
+                        <th>ID</th>
+                        <th>Staff ID</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Specialization</th>
+                        <th>Actions</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    <tr th:each="trainer : ${trainers}">
+
+
+                        <td th:text="${trainer.id}">
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge text-bg-secondary"
+                                  th:text="${trainer.staffId}">
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <strong>
+
+                                <span th:text="${trainer.firstName}">
+                                </span>
+
+                                <span th:text="${trainer.lastName}">
+                                </span>
+
+                            </strong>
+
+                        </td>
+
+
+                        <td th:text="${trainer.email}">
+                        </td>
+
+
+                        <td>
+
+                            <span th:if="${trainer.phone != null
+                                         and !trainer.phone.isEmpty()}"
+                                  th:text="${trainer.phone}">
+                            </span>
+
+                            <span th:unless="${trainer.phone != null
+                                             and !trainer.phone.isEmpty()}"
+                                  class="text-muted">
+
+                                —
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="badge text-bg-info"
+                                  th:text="${trainer.specialization}">
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="d-flex gap-2">
+
+
+                                <a th:href="@{/trainers/edit/{id}
+                                           (id=${trainer.id})}"
+                                   class="btn btn-sm
+                                          btn-outline-primary">
+
+                                    Edit
+
+                                </a>
+
+
+                                <form th:action="@{/trainers/delete/{id}
+                                                 (id=${trainer.id})}"
+                                      method="post">
+
+
+                                    <button type="submit"
+                                            class="btn btn-sm
+                                                   btn-outline-danger"
+                                            onclick="return confirm(
+                                            'Delete this trainer?'
+                                            );">
+
+                                        Delete
+
+                                    </button>
+
+                                </form>
+
+
+                            </div>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div th:if="${#lists.isEmpty(trainers)}"
+                 class="text-center text-muted p-5">
+
+                <h5>No trainers found</h5>
+
+                <p class="mb-0">
+                    Add the first trainer to the system.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+</body>
+
+</html>

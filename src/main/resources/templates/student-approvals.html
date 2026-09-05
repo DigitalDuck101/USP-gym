@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Student Approvals</title>
+
+</head>
+
+
+<body>
+
+
+<h1>USP Fitness Club</h1>
+
+<h2>Student ID Approvals</h2>
+
+
+<p th:if="${successMessage}"
+   th:text="${successMessage}"
+   style="color: green;">
+</p>
+
+
+<table border="1"
+       cellpadding="8">
+
+    <thead>
+
+    <tr>
+
+        <th>Student ID</th>
+
+        <th>Name</th>
+
+        <th>Email</th>
+
+        <th>Username</th>
+
+        <th>Status</th>
+
+        <th>Action</th>
+
+    </tr>
+
+    </thead>
+
+
+    <tbody>
+
+
+    <tr th:each="student : ${students}">
+
+
+        <td th:text="${student.studentId}">
+        </td>
+
+
+        <td>
+
+            <span th:text="${student.firstName}">
+            </span>
+
+            <span th:text="${student.lastName}">
+            </span>
+
+        </td>
+
+
+        <td th:text="${student.email}">
+        </td>
+
+
+        <td th:text="${student.appUser.username}">
+        </td>
+
+
+        <td th:text="${student.verificationStatus}">
+        </td>
+
+
+        <td>
+
+
+            <form th:action="@{/admin/student-approvals/{id}/approve
+                    (id=${student.id})}"
+                  method="post"
+                  style="display:inline;">
+
+                <button type="submit">
+                    Approve
+                </button>
+
+            </form>
+
+
+            <form th:action="@{/admin/student-approvals/{id}/reject
+                    (id=${student.id})}"
+                  method="post"
+                  style="display:inline;">
+
+                <button type="submit">
+                    Reject
+                </button>
+
+            </form>
+
+
+        </td>
+
+    </tr>
+
+
+    </tbody>
+
+</table>
+
+
+<br>
+
+<a th:href="@{/members}">
+    Back to Members
+</a>
+
+
+</body>
+
+</html>
+-->
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Student Approvals - USP Fitness Club</title>
+
+
+    <!-- Bootstrap -->
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+
+    <!-- Our CSS -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+
+<body>
+
+
+<!-- ADMIN NAVBAR -->
+
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
+
+
+
+<!-- MAIN CONTENT -->
+
+<div class="container page-container">
+
+
+    <!-- HEADER -->
+
+    <div class="d-flex
+                justify-content-between
+                align-items-center
+                flex-wrap
+                gap-3
+                mb-4">
+
+
+        <div>
+
+            <h1 class="page-title">
+                Student Approvals
+            </h1>
+
+
+            <p class="text-muted mb-0">
+
+                Review student registrations
+                and verify Student IDs
+
+            </p>
+
+        </div>
+
+
+        <a th:href="@{/members}"
+           class="btn btn-outline-secondary">
+
+            Back to Members
+
+        </a>
+
+
+    </div>
+
+
+
+    <!-- SUCCESS MESSAGE -->
+
+    <div th:if="${successMessage}"
+         class="alert
+                alert-success
+                alert-dismissible
+                fade
+                show">
+
+
+        <span th:text="${successMessage}">
+        </span>
+
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+
+    </div>
+
+
+
+    <!-- ERROR MESSAGE -->
+
+    <div th:if="${errorMessage}"
+         class="alert
+                alert-danger
+                alert-dismissible
+                fade
+                show">
+
+
+        <span th:text="${errorMessage}">
+        </span>
+
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+
+    </div>
+
+
+
+    <!-- INFORMATION -->
+
+    <div class="alert alert-info">
+
+        <strong>Student verification:</strong>
+
+        Students who register themselves
+        cannot log in until an administrator
+        verifies their Student ID and approves
+        the account.
+
+    </div>
+
+
+
+    <!-- CARD -->
+
+    <div class="card shadow-sm">
+
+
+        <div class="card-body">
+
+
+            <!-- TABLE -->
+
+            <div th:if="${!#lists.isEmpty(students)}"
+                 class="table-responsive">
+
+
+                <table class="table
+                              table-striped
+                              table-hover
+                              align-middle">
+
+
+                    <thead class="table-dark">
+
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Student ID</th>
+
+                        <th>Name</th>
+
+                        <th>Email</th>
+
+                        <th>Phone</th>
+
+                        <th>Username</th>
+
+                        <th>Status</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                    <tr th:each="student : ${students}">
+
+
+                        <!-- DATABASE ID -->
+
+                        <td th:text="${student.id}">
+                        </td>
+
+
+
+                        <!-- STUDENT ID -->
+
+                        <td>
+
+                            <span class="badge text-bg-primary"
+                                  th:text="${student.studentId}">
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- NAME -->
+
+                        <td>
+
+                            <strong>
+
+                                <span th:text="${student.firstName}">
+                                </span>
+
+                                <span th:text="${student.lastName}">
+                                </span>
+
+                            </strong>
+
+                        </td>
+
+
+
+                        <!-- EMAIL -->
+
+                        <td th:text="${student.email}">
+                        </td>
+
+
+
+                        <!-- PHONE -->
+
+                        <td>
+
+
+                            <span th:if="${student.phone != null
+                                         and !student.phone.isEmpty()}"
+                                  th:text="${student.phone}">
+                            </span>
+
+
+                            <span th:unless="${student.phone != null
+                                             and !student.phone.isEmpty()}"
+                                  class="text-muted">
+
+                                —
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- USERNAME -->
+
+                        <td>
+
+
+                            <span th:if="${student.appUser != null}"
+                                  th:text="${student.appUser.username}">
+                            </span>
+
+
+                            <span th:if="${student.appUser == null}"
+                                  class="text-danger">
+
+                                No account
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- STATUS -->
+
+                        <td>
+
+                            <span class="badge text-bg-warning">
+
+                                PENDING
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- ACTIONS -->
+
+                        <td>
+
+
+                            <div class="d-flex
+                                        gap-2
+                                        flex-wrap">
+
+
+                                <!-- APPROVE -->
+
+                                <form th:action="@{/admin/student-approvals/approve/{id}
+                                                 (id=${student.id})}"
+                                      method="post">
+
+
+                                    <button type="submit"
+                                            class="btn
+                                                   btn-sm
+                                                   btn-success"
+                                            onclick="return confirm(
+                                            'Approve this student?'
+                                            );">
+
+                                        Approve
+
+                                    </button>
+
+
+                                </form>
+
+
+
+                                <!-- REJECT -->
+
+                                <form th:action="@{/admin/student-approvals/reject/{id}
+                                                 (id=${student.id})}"
+                                      method="post">
+
+
+                                    <button type="submit"
+                                            class="btn
+                                                   btn-sm
+                                                   btn-danger"
+                                            onclick="return confirm(
+                                            'Reject this student registration?'
+                                            );">
+
+                                        Reject
+
+                                    </button>
+
+
+                                </form>
+
+
+                            </div>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+
+            <!-- EMPTY STATE -->
+
+            <div th:if="${#lists.isEmpty(students)}"
+                 class="text-center
+                        text-muted
+                        p-5">
+
+
+                <h5>
+                    No pending student registrations
+                </h5>
+
+
+                <p class="mb-0">
+
+                    All student registration requests
+                    have been processed.
+
+                </p>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+
+</body>
+
+</html>

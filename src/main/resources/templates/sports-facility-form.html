@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Add Sports Facility - USP Fitness Club</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+
+<body>
+
+
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
+
+
+<div class="container page-container">
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-lg-7 col-md-9">
+
+
+            <div class="mb-4">
+
+                <h1 class="page-title">
+                    Add Sports Facility
+                </h1>
+
+                <p class="text-muted">
+                    Register a university sports facility
+                </p>
+
+            </div>
+
+
+
+            <div class="card shadow-sm">
+
+
+                <div class="card-body p-4">
+
+
+                    <form th:action="@{/admin/facilities}"
+                          th:object="${facility}"
+                          method="post">
+
+
+                        <!-- NAME -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Facility Name
+                            </label>
+
+
+                            <input type="text"
+                                   th:field="*{name}"
+                                   class="form-control"
+                                   placeholder="Example: USP Swimming Pool"
+                                   required>
+
+                        </div>
+
+
+
+                        <!-- TYPE -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Facility Type
+                            </label>
+
+
+                            <select th:field="*{type}"
+                                    class="form-select"
+                                    required>
+
+
+                                <option value="">
+                                    Select Facility Type
+                                </option>
+
+
+                                <option th:each="type : ${facilityTypes}"
+                                        th:value="${type}"
+                                        th:text="${type}">
+                                </option>
+
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- LOCATION -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Location
+                            </label>
+
+
+                            <input type="text"
+                                   th:field="*{location}"
+                                   class="form-control"
+                                   placeholder="Example: Laucala Campus">
+
+                        </div>
+
+
+
+                        <!-- DESCRIPTION -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Description
+                            </label>
+
+
+                            <textarea th:field="*{description}"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Description of the facility">
+                            </textarea>
+
+                        </div>
+
+
+
+                        <div class="alert alert-info">
+
+                            New facilities are automatically created
+                            with ACTIVE status.
+
+                        </div>
+
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="d-flex gap-2">
+
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                Create Facility
+
+                            </button>
+
+
+                            <a th:href="@{/admin/facilities}"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+
+</body>
+</html>

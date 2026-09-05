@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+
+
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+
+    <title>Add Member - USP Fitness Club</title>
+
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+
+<body>
+
+
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
+
+
+<div class="container page-container">
+
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7 col-md-9">
+
+
+            <div class="mb-4">
+
+                <h1 class="page-title">
+                    Add Member
+                </h1>
+
+                <p class="text-muted">
+                    Create a new student or renter account
+                </p>
+
+            </div>
+
+
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+
+                    <form th:action="@{/members}"
+                          th:object="${member}"
+                          method="post">
+
+
+                        <!-- MEMBER TYPE -->
+
+                        <div class="mb-3">
+
+                            <label for="memberType"
+                                   class="form-label">
+
+                                Member Type
+
+                            </label>
+
+
+                            <select th:field="*{memberType}"
+                                    id="memberType"
+                                    class="form-select"
+                                    onchange="updateStudentId()"
+                                    required>
+
+
+                                <option value="">
+                                    Select Member Type
+                                </option>
+
+
+                                <option value="STUDENT">
+                                    Student
+                                </option>
+
+
+                                <option value="RENTER">
+                                    Renter
+                                </option>
+
+
+                            </select>
+
+                        </div>
+
+
+
+                        <!-- STUDENT ID -->
+
+                        <div class="mb-3"
+                             id="studentIdSection">
+
+                            <label for="studentId"
+                                   class="form-label">
+
+                                Student ID
+
+                            </label>
+
+
+                            <input type="text"
+                                   th:field="*{studentId}"
+                                   id="studentId"
+                                   class="form-control"
+                                   placeholder="Example: S12345678">
+
+
+                            <div class="form-text">
+
+                                Required only for students.
+
+                            </div>
+
+                        </div>
+
+
+
+                        <hr class="my-4">
+
+
+                        <h5 class="mb-3">
+                            Personal Information
+                        </h5>
+
+
+
+                        <!-- FIRST NAME -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                First Name
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{firstName}"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+
+                        <!-- LAST NAME -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Last Name
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{lastName}"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+
+                        <!-- EMAIL -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Email
+                            </label>
+
+                            <input type="email"
+                                   th:field="*{email}"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+
+                        <!-- PHONE -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Phone
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{phone}"
+                                   class="form-control">
+
+                        </div>
+
+
+
+                        <hr class="my-4">
+
+
+                        <h5 class="mb-3">
+                            Login Account
+                        </h5>
+
+
+
+                        <!-- USERNAME -->
+
+                        <div class="mb-3">
+
+                            <label for="username"
+                                   class="form-label">
+
+                                Username
+
+                            </label>
+
+                            <input type="text"
+                                   id="username"
+                                   name="username"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="mb-4">
+
+                            <label for="password"
+                                   class="form-label">
+
+                                Password
+
+                            </label>
+
+                            <input type="password"
+                                   id="password"
+                                   name="password"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                Create Member
+
+                            </button>
+
+
+                            <a th:href="@{/members}"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+    function updateStudentId() {
+
+        const memberType =
+                document.getElementById("memberType").value;
+
+        const studentSection =
+                document.getElementById("studentIdSection");
+
+        const studentInput =
+                document.getElementById("studentId");
+
+
+        if (memberType === "STUDENT") {
+
+            studentSection.style.display = "block";
+
+            studentInput.required = true;
+
+
+        } else {
+
+            studentSection.style.display = "none";
+
+            studentInput.required = false;
+
+            studentInput.value = "";
+
+        }
+    }
+
+
+    updateStudentId();
+
+</script>
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+
+</body>
+
+</html>

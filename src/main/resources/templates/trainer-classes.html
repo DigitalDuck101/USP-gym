@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>My Classes - USP Fitness Club</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+</head>
+
+<body>
+
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+        <a class="navbar-brand"
+           th:href="@{/trainer/profile}">
+
+            USP Fitness Club
+        </a>
+
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#trainerNavbar">
+
+            <span class="navbar-toggler-icon">
+            </span>
+
+        </button>
+
+
+        <div class="collapse navbar-collapse"
+             id="trainerNavbar">
+
+
+            <ul class="navbar-nav me-auto">
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       th:href="@{/trainer/profile}">
+
+                        Profile
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link active"
+                       th:href="@{/trainer/classes}">
+
+                        My Classes
+                    </a>
+
+                </li>
+
+            </ul>
+
+
+            <form th:action="@{/logout}"
+                  method="post">
+
+                <button type="submit"
+                        class="btn btn-outline-light">
+
+                    Logout
+                </button>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<div class="container page-container">
+
+
+    <div class="mb-4">
+
+        <h1 class="page-title">
+            My Fitness Classes
+        </h1>
+
+        <p class="text-muted">
+            Classes assigned to you
+        </p>
+
+    </div>
+
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+
+            <div class="table-responsive">
+
+                <table class="table
+                              table-striped
+                              table-hover
+                              align-middle">
+
+
+                    <thead class="table-dark">
+
+                    <tr>
+                        <th>Class</th>
+                        <th>Date</th>
+                        <th>Start</th>
+                        <th>End</th>
+                        <th>Capacity</th>
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    <tr th:each="fitnessClass : ${fitnessClasses}">
+
+
+                        <td>
+                            <strong th:text="${fitnessClass.name}">
+                            </strong>
+                        </td>
+
+
+                        <td th:text="${fitnessClass.date}">
+                        </td>
+
+
+                        <td>
+                            <span class="badge text-bg-success"
+                                  th:text="${fitnessClass.startTime}">
+                            </span>
+                        </td>
+
+
+                        <td>
+                            <span class="badge text-bg-secondary"
+                                  th:text="${fitnessClass.endTime}">
+                            </span>
+                        </td>
+
+
+                        <td th:text="${fitnessClass.capacity}">
+                        </td>
+
+
+                    </tr>
+
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+
+            <div th:if="${#lists.isEmpty(classes)}"
+                 class="text-center text-muted p-5">
+
+                <h5>No classes assigned</h5>
+
+                <p class="mb-0">
+                    You currently have no scheduled fitness classes.
+                </p>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Add Trainer - USP Fitness Club</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+<body>
+
+
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
+
+
+<div class="container page-container">
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7 col-md-9">
+
+
+            <div class="mb-4">
+
+                <h1 class="page-title">
+                    Add Trainer
+                </h1>
+
+                <p class="text-muted">
+                    Create a trainer and login account
+                </p>
+
+            </div>
+
+
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
+
+
+                    <form th:action="@{/trainers}"
+                          th:object="${trainer}"
+                          method="post">
+
+
+                        <h5 class="mb-3">
+                            Trainer Information
+                        </h5>
+
+
+                        <!-- STAFF ID -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Staff ID
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{staffId}"
+                                   class="form-control"
+                                   placeholder="Example: T001"
+                                   required>
+
+                        </div>
+
+
+                        <!-- FIRST NAME -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                First Name
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{firstName}"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+                        <!-- LAST NAME -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Last Name
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{lastName}"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Email
+                            </label>
+
+                            <input type="email"
+                                   th:field="*{email}"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Phone
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{phone}"
+                                   class="form-control">
+
+                        </div>
+
+
+                        <!-- SPECIALIZATION -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Specialization
+                            </label>
+
+                            <input type="text"
+                                   th:field="*{specialization}"
+                                   class="form-control"
+                                   placeholder="Example: Swimming, Fitness, Yoga"
+                                   required>
+
+                        </div>
+
+
+                        <hr class="my-4">
+
+
+                        <h5 class="mb-3">
+                            Login Account
+                        </h5>
+
+
+                        <!-- USERNAME -->
+
+                        <div class="mb-3">
+
+                            <label for="username"
+                                   class="form-label">
+
+                                Username
+
+                            </label>
+
+                            <input type="text"
+                                   id="username"
+                                   name="username"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="mb-4">
+
+                            <label for="password"
+                                   class="form-label">
+
+                                Password
+
+                            </label>
+
+                            <input type="password"
+                                   id="password"
+                                   name="password"
+                                   class="form-control"
+                                   required>
+
+                        </div>
+
+
+                        <div class="alert alert-info">
+
+                            Trainer accounts are created by the
+                            administrator and are activated immediately.
+
+                        </div>
+
+
+                        <div class="d-flex gap-2">
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                Create Trainer
+
+                            </button>
+
+
+                            <a th:href="@{/trainers}"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+</body>
+
+</html>

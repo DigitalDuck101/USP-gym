@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Request Facility Rental - USP Fitness Club</title>
+
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+
+<body>
+
+
+<div th:replace="~{fragments/renter-navbar :: renterNavbar}">
+</div>
+
+
+<div class="container page-container">
+
+
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7 col-md-9">
+
+
+            <div class="mb-4">
+
+                <h1 class="page-title">
+                    Request Facility Rental
+                </h1>
+
+                <p class="text-muted">
+                    Submit a rental request for administrator approval
+                </p>
+
+            </div>
+
+
+
+            <div class="card shadow-sm">
+
+
+                <div class="card-body p-4">
+
+
+                    <form th:action="@{/renter/rental-request}"
+                          method="post">
+
+
+                        <!-- FACILITY -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Sports Facility
+                            </label>
+
+
+                            <select name="facilityId"
+                                    class="form-select"
+                                    required>
+
+
+                                <option value="">
+                                    Select Sports Facility
+                                </option>
+
+
+                                <option th:each="facility : ${facilities}"
+                                        th:value="${facility.id}"
+                                        th:text="${facility.name
+                                                  + ' - '
+                                                  + facility.type
+                                                  + ' - '
+                                                  + facility.location}">
+                                </option>
+
+
+                            </select>
+
+
+                            <div class="form-text">
+
+                                Only currently active facilities are shown.
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- TIME -->
+
+                        <div class="row">
+
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    Start Date / Time
+                                </label>
+
+
+                                <input type="datetime-local"
+                                       name="startDateTime"
+                                       class="form-control"
+                                       required>
+
+                            </div>
+
+
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label">
+                                    End Date / Time
+                                </label>
+
+
+                                <input type="datetime-local"
+                                       name="endDateTime"
+                                       class="form-control"
+                                       required>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- PURPOSE -->
+
+                        <div class="mb-4">
+
+                            <label class="form-label">
+                                Purpose of Rental
+                            </label>
+
+
+                            <textarea name="purpose"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Example: Football training session"
+                                      required>
+                            </textarea>
+
+                        </div>
+
+
+
+                        <!-- INFORMATION -->
+
+                        <div class="alert alert-info">
+
+                            <strong>How it works:</strong>
+
+                            <br>
+
+                            Your request will be sent to the administrator.
+
+                            The rental is not confirmed until the
+                            administrator approves it.
+
+                        </div>
+
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="d-flex gap-2">
+
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                Send Request
+
+                            </button>
+
+
+                            <a th:href="@{/renter/rentals}"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+
+</body>
+</html>

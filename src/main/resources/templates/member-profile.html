@@ -1,0 +1,535 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>My Profile - USP Fitness Club</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+<body>
+
+
+<!-- ========================= -->
+<!-- RENTER NAVBAR -->
+<!-- ========================= -->
+
+<div th:if="${member.memberType != null
+             and member.memberType.name() == 'RENTER'}">
+
+    <div th:replace="~{fragments/renter-navbar :: renterNavbar}">
+    </div>
+
+</div>
+
+
+<!-- ========================= -->
+<!-- STUDENT NAVBAR -->
+<!-- ========================= -->
+
+<nav th:if="${member.memberType != null
+             and member.memberType.name() == 'STUDENT'}"
+     class="navbar navbar-expand-lg navbar-dark bg-dark">
+
+    <div class="container">
+
+
+        <a class="navbar-brand"
+           th:href="@{/profile}">
+
+            USP Fitness Club
+
+        </a>
+
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#studentNavbar">
+
+            <span class="navbar-toggler-icon">
+            </span>
+
+        </button>
+
+
+        <div class="collapse navbar-collapse"
+             id="studentNavbar">
+
+
+            <ul class="navbar-nav me-auto">
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link active"
+                       th:href="@{/profile}">
+
+                        Profile
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       th:href="@{/member/classes}">
+
+                        Fitness Classes
+
+                    </a>
+
+                </li>
+
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       th:href="@{/member/bookings}">
+
+                        My Bookings
+
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+
+            <form th:action="@{/logout}"
+                  method="post">
+
+                <button type="submit"
+                        class="btn btn-outline-light">
+
+                    Logout
+
+                </button>
+
+            </form>
+
+
+        </div>
+
+    </div>
+
+</nav>
+
+
+<!-- ========================= -->
+<!-- PROFILE CONTENT -->
+<!-- ========================= -->
+
+<div class="container page-container">
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-lg-8 col-md-10">
+
+
+            <!-- TITLE -->
+
+            <div class="mb-4">
+
+                <h1 class="page-title">
+                    My Profile
+                </h1>
+
+                <p class="text-muted">
+
+                    View your account and membership information
+
+                </p>
+
+            </div>
+
+
+            <!-- PROFILE CARD -->
+
+            <div class="card shadow-sm mb-4">
+
+
+                <div class="card-body p-4">
+
+
+                    <!-- NAME -->
+
+                    <div class="d-flex
+                                justify-content-between
+                                align-items-start
+                                mb-4">
+
+
+                        <div>
+
+                            <h3 class="mb-1">
+
+                                <span th:text="${member.firstName}">
+                                </span>
+
+                                <span th:text="${member.lastName}">
+                                </span>
+
+                            </h3>
+
+
+                            <p class="text-muted mb-0"
+                               th:text="${member.email}">
+                            </p>
+
+                        </div>
+
+
+
+                        <!-- STUDENT BADGE -->
+
+                        <span th:if="${member.memberType != null
+                                     and member.memberType.name()
+                                     == 'STUDENT'}"
+                              class="badge text-bg-success fs-6">
+
+                            STUDENT
+
+                        </span>
+
+
+
+                        <!-- RENTER BADGE -->
+
+                        <span th:if="${member.memberType != null
+                                     and member.memberType.name()
+                                     == 'RENTER'}"
+                              class="badge text-bg-primary fs-6">
+
+                            RENTER
+
+                        </span>
+
+
+                    </div>
+
+
+                    <hr>
+
+
+                    <!-- INFORMATION -->
+
+                    <div class="row mt-4">
+
+
+                        <!-- MEMBER ID -->
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="text-muted small">
+                                Member ID
+                            </div>
+
+                            <strong th:text="${member.id}">
+                            </strong>
+
+                        </div>
+
+
+                        <!-- PHONE -->
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="text-muted small">
+                                Phone
+                            </div>
+
+
+                            <strong th:if="${member.phone != null
+                                           and !member.phone.isEmpty()}"
+                                    th:text="${member.phone}">
+                            </strong>
+
+
+                            <span th:unless="${member.phone != null
+                                             and !member.phone.isEmpty()}"
+                                  class="text-muted">
+
+                                Not provided
+
+                            </span>
+
+                        </div>
+
+
+                        <!-- EMAIL -->
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="text-muted small">
+                                Email
+                            </div>
+
+                            <strong th:text="${member.email}">
+                            </strong>
+
+                        </div>
+
+
+                        <!-- MEMBER TYPE -->
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="text-muted small">
+                                Member Type
+                            </div>
+
+                            <strong th:text="${member.memberType}">
+                            </strong>
+
+                        </div>
+
+
+                        <!-- STUDENT ID -->
+
+                        <div class="col-md-6 mb-3"
+                             th:if="${member.memberType != null
+                             and member.memberType.name()
+                             == 'STUDENT'}">
+
+                            <div class="text-muted small">
+                                Student ID
+                            </div>
+
+                            <strong th:text="${member.studentId}">
+                            </strong>
+
+                        </div>
+
+
+                        <!-- VERIFICATION -->
+
+                        <div class="col-md-6 mb-3"
+                             th:if="${member.memberType != null
+                             and member.memberType.name()
+                             == 'STUDENT'}">
+
+                            <div class="text-muted small">
+                                Verification Status
+                            </div>
+
+
+                            <span th:if="${member.verificationStatus != null
+                                         and member.verificationStatus.name()
+                                         == 'APPROVED'}"
+                                  class="badge text-bg-success">
+
+                                APPROVED
+
+                            </span>
+
+
+                            <span th:if="${member.verificationStatus != null
+                                         and member.verificationStatus.name()
+                                         == 'PENDING'}"
+                                  class="badge text-bg-warning">
+
+                                PENDING
+
+                            </span>
+
+
+                            <span th:if="${member.verificationStatus != null
+                                         and member.verificationStatus.name()
+                                         == 'REJECTED'}"
+                                  class="badge text-bg-danger">
+
+                                REJECTED
+
+                            </span>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <!-- ======================== -->
+            <!-- STUDENT ACTIONS -->
+            <!-- ======================== -->
+
+            <div th:if="${member.memberType != null
+                         and member.memberType.name() == 'STUDENT'}"
+                 class="card shadow-sm mb-4">
+
+
+                <div class="card-body p-4">
+
+
+                    <h5 class="mb-3">
+                        Fitness Activities
+                    </h5>
+
+
+                    <div class="d-flex gap-2 flex-wrap">
+
+
+                        <a th:href="@{/member/classes}"
+                           class="btn btn-primary">
+
+                            View Fitness Classes
+
+                        </a>
+
+
+                        <a th:href="@{/member/bookings}"
+                           class="btn btn-outline-primary">
+
+                            My Bookings
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- ======================== -->
+            <!-- RENTER ACTIONS -->
+            <!-- ======================== -->
+
+            <div th:if="${member.memberType != null
+                         and member.memberType.name() == 'RENTER'}"
+                 class="card shadow-sm mb-4">
+
+
+                <div class="card-body p-4">
+
+
+                    <h5 class="mb-2">
+                        Facility Rentals
+                    </h5>
+
+
+                    <p class="text-muted">
+
+                        Request university sports facilities
+                        and check the status of your rental applications.
+
+                    </p>
+
+
+                    <div class="d-flex gap-2 flex-wrap">
+
+
+                        <a th:href="@{/renter/rentals}"
+                           class="btn btn-primary">
+
+                            My Facility Rentals
+
+                        </a>
+
+
+                        <a th:href="@{/renter/rental-request/new}"
+                           class="btn btn-success">
+
+                            + Request Rental
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+            <!-- FITNESS FOR RENTER TOO -->
+
+            <div th:if="${member.memberType != null
+                         and member.memberType.name() == 'RENTER'}"
+                 class="card shadow-sm">
+
+
+                <div class="card-body p-4">
+
+
+                    <h5 class="mb-3">
+                        Fitness Activities
+                    </h5>
+
+
+                    <div class="d-flex gap-2 flex-wrap">
+
+
+                        <a th:href="@{/member/classes}"
+                           class="btn btn-outline-primary">
+
+                            Fitness Classes
+
+                        </a>
+
+
+                        <a th:href="@{/member/bookings}"
+                           class="btn btn-outline-secondary">
+
+                            My Bookings
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+
+</body>
+
+</html>

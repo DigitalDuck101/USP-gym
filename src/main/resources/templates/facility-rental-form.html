@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Create Facility Rental</title>
+
+</head>
+
+
+<body>
+
+
+<h1>USP Fitness Club</h1>
+
+<h2>Create Facility Rental</h2>
+
+
+<form th:action="@{/admin/rentals}"
+      method="post">
+
+
+    <label>Renter:</label>
+
+    <br>
+
+
+    <select name="renterId"
+            required>
+
+
+        <option value="">
+            Select Renter
+        </option>
+
+
+        <option th:each="renter : ${renters}"
+                th:value="${renter.id}"
+                th:text="${renter.firstName
+                          + ' '
+                          + renter.lastName
+                          + ' - '
+                          + renter.email}">
+        </option>
+
+
+    </select>
+
+
+    <br><br>
+
+
+    <label>Sports Facility:</label>
+
+    <br>
+
+
+    <select name="facilityId"
+            required>
+
+
+        <option value="">
+            Select Facility
+        </option>
+
+
+        <option th:each="facility : ${facilities}"
+                th:value="${facility.id}"
+                th:text="${facility.name
+                          + ' - '
+                          + facility.type}">
+        </option>
+
+
+    </select>
+
+
+    <br><br>
+
+
+    <label>Start Date / Time:</label>
+
+    <br>
+
+
+    <input type="datetime-local"
+           name="startDateTime"
+           required>
+
+
+    <br><br>
+
+
+    <label>End Date / Time:</label>
+
+    <br>
+
+
+    <input type="datetime-local"
+           name="endDateTime"
+           required>
+
+
+    <br><br>
+
+
+    <label>Purpose:</label>
+
+    <br>
+
+
+    <textarea name="purpose"
+              rows="5"
+              cols="50"
+              required>
+    </textarea>
+
+
+    <br><br>
+
+
+    <button type="submit">
+
+        Create Rental
+
+    </button>
+
+
+</form>
+
+
+<br>
+
+
+<a th:href="@{/admin/rentals}">
+
+    Cancel
+
+</a>
+
+
+</body>
+
+</html>

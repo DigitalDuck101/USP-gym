@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>USP Fitness Club - Login</title>
+
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+        }
+
+        .login-container {
+            width: 350px;
+            margin: 100px auto;
+            background-color: white;
+            padding: 30px;
+            border: 1px solid #ddd;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        h2 {
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+
+        .error {
+            color: red;
+            text-align: center;
+        }
+
+        .logout {
+            color: green;
+            text-align: center;
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+<div class="login-container">
+
+    <h1>USP Fitness Club</h1>
+
+    <h2>Login</h2>
+    
+
+
+    <p th:if="${param.error}"
+       class="error">
+
+        Incorrect username or password.
+
+    </p>
+
+
+    <p th:if="${param.logout}"
+       class="logout">
+
+        You have been logged out.
+
+    </p>
+
+
+    <form th:action="@{/login}"
+          method="post">
+
+        <label>Username</label>
+
+        <input type="text"
+               name="username"
+               required>
+
+
+        <label>Password</label>
+
+        <input type="password"
+               name="password"
+               required>
+
+
+        <button type="submit">
+            Login
+        </button>
+        <br>
+
+        <a th:href="@{/register}">
+          Create New Account
+        </a>
+        <p th:if="${param.registered}"
+            style="color: green;">
+
+            Registration successful.
+            You can now login.
+
+        </p>
+
+
+        <p th:if="${param.pending}"
+            style="color: orange;">
+
+            Registration successful.
+            Your Student ID must be approved
+            by an administrator before you can login.
+
+        </p>
+    </form>
+
+</div>
+
+</body>
+
+</html>

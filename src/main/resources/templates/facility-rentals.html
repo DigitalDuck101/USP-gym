@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Facility Rentals - USP Fitness Club</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <!-- Our CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+
+<body>
+
+
+<!-- ========================================= -->
+<!-- ADMIN NAVBAR -->
+<!-- ========================================= -->
+
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
+
+
+<!-- ========================================= -->
+<!-- MAIN CONTENT -->
+<!-- ========================================= -->
+
+<div class="container page-container">
+
+
+    <!-- PAGE HEADER -->
+
+    <div class="d-flex
+                justify-content-between
+                align-items-center
+                flex-wrap
+                gap-3
+                mb-4">
+
+
+        <div>
+
+            <h1 class="page-title">
+                Facility Rentals
+            </h1>
+
+            <p class="text-muted mb-0">
+                Review rental requests and manage facility rentals
+            </p>
+
+        </div>
+
+
+        <a th:href="@{/admin/rentals/new}"
+           class="btn btn-primary">
+
+            + Create Rental
+
+        </a>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- SUCCESS MESSAGE -->
+    <!-- ========================================= -->
+
+    <div th:if="${successMessage}"
+         class="alert
+                alert-success
+                alert-dismissible
+                fade
+                show"
+         role="alert">
+
+
+        <span th:text="${successMessage}">
+        </span>
+
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- ERROR MESSAGE -->
+    <!-- ========================================= -->
+
+    <div th:if="${errorMessage}"
+         class="alert
+                alert-danger
+                alert-dismissible
+                fade
+                show"
+         role="alert">
+
+
+        <span th:text="${errorMessage}">
+        </span>
+
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+    </div>
+
+
+    <!-- ========================================= -->
+    <!-- TABLE CARD -->
+    <!-- ========================================= -->
+
+    <div class="card shadow-sm">
+
+
+        <div class="card-body">
+
+
+            <!-- TABLE ONLY IF RENTALS EXIST -->
+
+            <div th:if="${!#lists.isEmpty(rentals)}"
+                 class="table-responsive">
+
+
+                <table class="table
+                              table-striped
+                              table-hover
+                              align-middle">
+
+
+                    <thead class="table-dark">
+
+
+                    <tr>
+
+                        <th>ID</th>
+
+                        <th>Renter</th>
+
+                        <th>Facility</th>
+
+                        <th>From</th>
+
+                        <th>To</th>
+
+                        <th>Purpose</th>
+
+                        <th>Status</th>
+
+                        <th>Admin Comment</th>
+
+                        <th>Approval</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+
+                    </thead>
+
+
+
+                    <tbody>
+
+
+                    <tr th:each="rental : ${rentals}">
+
+
+                        <!-- ================================= -->
+                        <!-- ID -->
+                        <!-- ================================= -->
+
+                        <td th:text="${rental.id}">
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- RENTER -->
+                        <!-- ================================= -->
+
+                        <td>
+
+
+                            <strong>
+
+                                <span th:text="${rental.renter.firstName}">
+                                </span>
+
+                                <span th:text="${rental.renter.lastName}">
+                                </span>
+
+                            </strong>
+
+
+                            <div class="small text-muted"
+                                 th:text="${rental.renter.email}">
+                            </div>
+
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- FACILITY -->
+                        <!-- ================================= -->
+
+                        <td>
+
+
+                            <strong th:text="${rental.facility.name}">
+                            </strong>
+
+
+                            <div class="small text-muted"
+                                 th:text="${rental.facility.type}">
+                            </div>
+
+
+                            <div class="small text-muted"
+                                 th:text="${rental.facility.location}">
+                            </div>
+
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- START -->
+                        <!-- ================================= -->
+
+                        <td th:text="${rental.startDateTime}">
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- END -->
+                        <!-- ================================= -->
+
+                        <td th:text="${rental.endDateTime}">
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- PURPOSE -->
+                        <!-- ================================= -->
+
+                        <td th:text="${rental.purpose}">
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- STATUS -->
+                        <!-- ================================= -->
+
+                        <td>
+
+
+                            <!-- PENDING -->
+
+                            <span th:if="${rental.status.name() == 'PENDING'}"
+                                  class="badge text-bg-warning">
+
+                                PENDING
+
+                            </span>
+
+
+
+                            <!-- CONFIRMED -->
+
+                            <span th:if="${rental.status.name() == 'CONFIRMED'}"
+                                  class="badge text-bg-success">
+
+                                CONFIRMED
+
+                            </span>
+
+
+
+                            <!-- REJECTED -->
+
+                            <span th:if="${rental.status.name() == 'REJECTED'}"
+                                  class="badge text-bg-danger">
+
+                                REJECTED
+
+                            </span>
+
+
+
+                            <!-- CANCELLED -->
+
+                            <span th:if="${rental.status.name() == 'CANCELLED'}"
+                                  class="badge text-bg-secondary">
+
+                                CANCELLED
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- ADMIN COMMENT -->
+                        <!-- ================================= -->
+
+                        <td>
+
+
+                            <span th:if="${rental.adminComment != null
+                                         and !rental.adminComment.isEmpty()}"
+                                  th:text="${rental.adminComment}">
+                            </span>
+
+
+                            <span th:unless="${rental.adminComment != null
+                                             and !rental.adminComment.isEmpty()}"
+                                  class="text-muted">
+
+                                —
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- APPROVAL -->
+                        <!-- ================================= -->
+
+                        <td style="min-width: 180px;">
+
+
+                            <!-- PENDING REQUEST -->
+
+                            <div th:if="${rental.status.name() == 'PENDING'}">
+
+
+                                <!-- APPROVE -->
+
+                                <form th:action="@{/admin/rentals/approve/{id}
+                                                 (id=${rental.id})}"
+                                      method="post"
+                                      class="mb-2">
+
+
+                                    <button type="submit"
+                                            class="btn
+                                                   btn-sm
+                                                   btn-success
+                                                   w-100"
+
+                                            onclick="return confirm(
+                                            'Approve this rental request?'
+                                            );">
+
+                                        Approve
+
+                                    </button>
+
+
+                                </form>
+
+
+
+                                <!-- REJECT -->
+
+                                <form th:action="@{/admin/rentals/reject/{id}
+                                                 (id=${rental.id})}"
+                                      method="post">
+
+
+                                    <input type="text"
+                                           name="comment"
+                                           class="form-control
+                                                  form-control-sm
+                                                  mb-2"
+                                           placeholder="Reason for rejection">
+
+
+                                    <button type="submit"
+                                            class="btn
+                                                   btn-sm
+                                                   btn-danger
+                                                   w-100"
+
+                                            onclick="return confirm(
+                                            'Reject this rental request?'
+                                            );">
+
+                                        Reject
+
+                                    </button>
+
+
+                                </form>
+
+
+                            </div>
+
+
+
+                            <!-- ALREADY APPROVED -->
+
+                            <span th:if="${rental.status.name() == 'CONFIRMED'}"
+                                  class="badge text-bg-success">
+
+                                APPROVED
+
+                            </span>
+
+
+
+                            <!-- REJECTED -->
+
+                            <span th:if="${rental.status.name() == 'REJECTED'}"
+                                  class="badge text-bg-danger">
+
+                                REJECTED
+
+                            </span>
+
+
+
+                            <!-- CANCELLED -->
+
+                            <span th:if="${rental.status.name() == 'CANCELLED'}"
+                                  class="text-muted">
+
+                                —
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- ACTIONS -->
+                        <!-- ================================= -->
+
+                        <td>
+
+
+                            <!-- CANCEL CONFIRMED RENTAL -->
+
+                            <form th:if="${rental.status.name() == 'CONFIRMED'}"
+                                  th:action="@{/admin/rentals/cancel/{id}
+                                             (id=${rental.id})}"
+                                  method="post">
+
+
+                                <button type="submit"
+                                        class="btn
+                                               btn-sm
+                                               btn-outline-danger"
+
+                                        onclick="return confirm(
+                                        'Cancel this rental?'
+                                        );">
+
+                                    Cancel Rental
+
+                                </button>
+
+
+                            </form>
+
+
+
+                            <!-- NO ACTION FOR PENDING -->
+
+                            <span th:if="${rental.status.name() == 'PENDING'}"
+                                  class="text-muted">
+
+                                —
+
+                            </span>
+
+
+
+                            <!-- NO ACTION FOR REJECTED -->
+
+                            <span th:if="${rental.status.name() == 'REJECTED'}"
+                                  class="text-muted">
+
+                                —
+
+                            </span>
+
+
+
+                            <!-- NO ACTION FOR CANCELLED -->
+
+                            <span th:if="${rental.status.name() == 'CANCELLED'}"
+                                  class="text-muted">
+
+                                —
+
+                            </span>
+
+
+                        </td>
+
+
+                    </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+
+            </div>
+
+
+            <!-- ========================================= -->
+            <!-- EMPTY TABLE -->
+            <!-- ========================================= -->
+
+            <div th:if="${#lists.isEmpty(rentals)}"
+                 class="text-center
+                        text-muted
+                        p-5">
+
+
+                <h5>
+                    No facility rentals found
+                </h5>
+
+
+                <p class="mb-3">
+
+                    There are currently no rental requests
+                    or confirmed rentals.
+
+                </p>
+
+
+                <a th:href="@{/admin/rentals/new}"
+                   class="btn btn-primary">
+
+                    + Create Rental
+
+                </a>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+<!-- ========================================= -->
+<!-- BOOTSTRAP JS -->
+<!-- ========================================= -->
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+
+</body>
+
+</html>
