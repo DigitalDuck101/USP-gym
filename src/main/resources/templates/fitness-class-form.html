@@ -113,6 +113,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                             <input type="date"
                                    th:field="*{date}"
+                                   id="classDate"
                                    class="form-control"
                                    required>
 
@@ -132,6 +133,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                                 <input type="time"
                                        th:field="*{startTime}"
+                                       id="startTime"
                                        class="form-control"
                                        required>
 
@@ -148,6 +150,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                                 <input type="time"
                                        th:field="*{endTime}"
+                                       id="endTime"
                                        class="form-control"
                                        required>
 
@@ -209,6 +212,132 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
 <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+<script>
+
+    const dateInput =
+            document.getElementById("classDate");
+
+    const startInput =
+            document.getElementById("startTime");
+
+    const endInput =
+            document.getElementById("endTime");
+
+
+    function getToday() {
+
+        const now = new Date();
+
+        const year =
+                now.getFullYear();
+
+        const month =
+                String(now.getMonth() + 1)
+                    .padStart(2, "0");
+
+        const day =
+                String(now.getDate())
+                    .padStart(2, "0");
+
+        return year
+                + "-"
+                + month
+                + "-"
+                + day;
+    }
+
+
+    function getCurrentTime() {
+
+        const now = new Date();
+
+        const hours =
+                String(now.getHours())
+                    .padStart(2, "0");
+
+        const minutes =
+                String(now.getMinutes())
+                    .padStart(2, "0");
+
+        return hours
+                + ":"
+                + minutes;
+    }
+
+
+    const today = getToday();
+
+
+    // Past dates cannot be selected
+    dateInput.min = today;
+
+
+    function updateStartTimeMinimum() {
+
+        if (dateInput.value === today) {
+
+            startInput.min =
+                    getCurrentTime();
+
+        } else {
+
+            startInput.removeAttribute(
+                    "min"
+            );
+        }
+    }
+
+
+    dateInput.addEventListener(
+            "change",
+            function () {
+
+                updateStartTimeMinimum();
+
+                startInput.value = "";
+                endInput.value = "";
+            }
+    );
+
+
+    startInput.addEventListener(
+            "change",
+            function () {
+
+                endInput.min =
+                        startInput.value;
+
+                if (endInput.value
+                        && endInput.value
+                        <= startInput.value) {
+
+                    endInput.value = "";
+                }
+            }
+    );
+
+
+    endInput.addEventListener(
+            "change",
+            function () {
+
+                if (startInput.value
+                        && endInput.value
+                        <= startInput.value) {
+
+                    alert(
+                        "End time must be after start time."
+                    );
+
+                    endInput.value = "";
+                }
+            }
+    );
+
+
+    updateStartTimeMinimum();
+
 </script>
 
 </body>

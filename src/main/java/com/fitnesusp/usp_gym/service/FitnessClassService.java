@@ -7,6 +7,7 @@ package com.fitnesusp.usp_gym.service;
 import com.fitnesusp.usp_gym.model.FitnessClass;
 import com.fitnesusp.usp_gym.model.Trainer;
 import com.fitnesusp.usp_gym.repository.FitnessClassRepository;
+import java.time.LocalDateTime;
 
 import java.util.List;
 
@@ -82,23 +83,56 @@ public class FitnessClassService {
 
     private void validateClass( FitnessClass fitnessClass) {
 
+        if (fitnessClass.getDate() == null) {
+          throw new IllegalStateException( "Class date is required.");
+        }
+
         if (fitnessClass.getStartTime() == null || fitnessClass.getEndTime() == null) {
 
-            throw new IllegalArgumentException( "Start and end time are required"); }
+           throw new IllegalStateException( "Start and end time are required.");
+        }
+
 
         if (!fitnessClass.getEndTime().isAfter(fitnessClass.getStartTime())) {
 
-            throw new IllegalArgumentException( "End time must be after start time");
+            throw new IllegalStateException( "End time must be after start time.");
         }
+
+
+        LocalDateTime classStart = LocalDateTime.of( fitnessClass.getDate(), fitnessClass.getStartTime());
+
+
+        if (!classStart.isAfter( LocalDateTime.now())) {
+
+            throw new IllegalStateException( "Fitness class cannot start in the past.");
+        }
+
 
         if (fitnessClass.getCapacity() == null || fitnessClass.getCapacity() <= 0) {
 
-            throw new IllegalArgumentException( "Capacity must be greater than zero");
+           throw new IllegalStateException( "Capacity must be greater than 0.");
         }
-    }
+}
     
     public List<FitnessClass> getUpcomingClasses() {
 
-        return fitnessClassRepository.findByDateGreaterThanEqualOrderByDateAscStartTimeAsc(LocalDate.now());
+        LocalDateTime now = LocalDateTime.now();
+
+        return fitnessClassRepository
+            .findAllByOrderByDateAscStartTimeAsc()
+            .stream()
+            .filter(fitnessClass -> {
+
+                LocalDateTime classStart =
+                        LocalDateTime.of(
+                                fitnessClass.getDate(),
+                                fitnessClass.getStartTime()
+                        );
+
+                return classStart.isAfter(now);
+            })
+            .toList();
     }
+    
+    
 }

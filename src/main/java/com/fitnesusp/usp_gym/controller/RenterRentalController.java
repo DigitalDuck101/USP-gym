@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import java.time.LocalDateTime;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -109,6 +110,27 @@ public String showRentalRequestForm( Model model) {
 
 
     return "redirect:/renter/rentals";
+    }
+    
+    @PostMapping("/renter/rentals/cancel/{id}")
+    public String cancelRental(
+        @PathVariable Long id,
+        Principal principal,
+        RedirectAttributes redirectAttributes) {
+
+        try {
+
+            rentalService.cancelRentalByRenter( principal.getName(), id);
+            redirectAttributes.addFlashAttribute( "successMessage", "Rental cancelled successfully.");
+
+
+        } catch (IllegalStateException e) {
+
+            redirectAttributes.addFlashAttribute( "errorMessage", e.getMessage());
+        }
+
+
+       return "redirect:/renter/rentals";
     }
     
 }

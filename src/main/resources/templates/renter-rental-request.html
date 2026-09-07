@@ -122,6 +122,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                                 <input type="datetime-local"
                                        name="startDateTime"
+                                       id="startDateTime"
                                        class="form-control"
                                        required>
 
@@ -138,6 +139,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                                 <input type="datetime-local"
                                        name="endDateTime"
+                                       id="endDateTime"
                                        class="form-control"
                                        required>
 
@@ -228,7 +230,61 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
 </script>
+<script>
 
+    function getLocalDateTime() {
+
+        const now = new Date();
+
+        const year = now.getFullYear();
+
+        const month =  String(now.getMonth() + 1).padStart(2, '0');
+
+        const day = String(now.getDate()).padStart(2, '0');
+
+        const hours = String(now.getHours()).padStart(2, '0');
+
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+
+
+        return year
+                + "-"
+                + month
+                + "-"
+                + day
+                + "T"
+                + hours
+                + ":"
+                + minutes;
+    }
+
+
+    const startInput = document.getElementById( "startDateTime");
+
+    const endInput = document.getElementById("endDateTime");
+
+
+    const now = getLocalDateTime();
+
+
+    // User cannot select the past
+    startInput.min = now;
+    endInput.min = now;
+
+
+    // End cannot be earlier than Start
+    startInput.addEventListener("change", function () {
+
+                endInput.min = startInput.value;
+
+                if (endInput.value && endInput.value  <= startInput.value) {
+
+                    endInput.value = "";
+                }
+            }
+    );
+
+</script>
 
 </body>
 </html>

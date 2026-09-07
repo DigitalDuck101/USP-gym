@@ -118,20 +118,30 @@ public class FacilityRentalService {
         return rentalRepository.save(rental);
     }
     
-    private void validateRentalTimes(
-        LocalDateTime startDateTime,
-        LocalDateTime endDateTime) {
-
+    private void validateRentalTimes( LocalDateTime startDateTime, LocalDateTime endDateTime) {
 
         if (startDateTime == null || endDateTime == null) {
 
-            throw new IllegalStateException( "Start and end date/time are required.");
+            throw new IllegalStateException("Start and end date/time are required.");
         }
 
 
+        LocalDateTime now = LocalDateTime.now()
+            .withSecond(0)
+            .withNano(0);
+
+
+        // Cannot select a date/time in the past
+        if (startDateTime.isBefore(now)) {
+
+            throw new IllegalStateException("The rental start date/time cannot be in the past.");
+        }
+
+
+        // End must be after start
         if (!endDateTime.isAfter(startDateTime)) {
 
-            throw new IllegalStateException( "End time must be after start time.");
+            throw new IllegalStateException("End date/time must be after start date/time.");
         }
     }
 
@@ -316,5 +326,31 @@ public class FacilityRentalService {
     public List<FacilityRental> getPendingRequests() {
 
         return rentalRepository.findByStatusOrderByCreatedAtAsc( FacilityRentalStatus.PENDING);
+    }
+    
+  
+    
+    @Transactional
+    public void cancelRentalByRenter( String username, Long rentalId) {
+
+       Member renter =  memberService.getMemberByUsername(username);
+
+       if (renter.getMemberType() != MemberType.RENTER) {
+          throw new IllegalStateException( "Only renters can cancel rental requests.");
+        }
+
+       FacilityRental rental = rentalRepository.findByIdAndRenter_Id( rentalId, renter.getId())
+                    .orElseThrow(() -> new IllegalStateException("Rental request not found."));
+
+
+        if (rental.getStatus() != FacilityRentalStatus.PENDING) {
+
+           throw new IllegalStateException("Only pending rental requests can be withdrawn.");
+        }
+
+
+         rental.setStatus( FacilityRentalStatus.CANCELLED);
+
+        rentalRepository.save(rental);
     }
 }

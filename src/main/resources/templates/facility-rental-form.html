@@ -1,15 +1,20 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
 
     <meta charset="UTF-8">
 
-    <title>Create Facility Rental</title>
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Create Facility Rental - USP Fitness Club</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
 
 </head>
 
@@ -17,132 +22,357 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <body>
 
 
-<h1>USP Fitness Club</h1>
+<!-- ADMIN NAVBAR -->
 
-<h2>Create Facility Rental</h2>
-
-
-<form th:action="@{/admin/rentals}"
-      method="post">
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
 
 
-    <label>Renter:</label>
-
-    <br>
+<div class="container page-container">
 
 
-    <select name="renterId"
-            required>
+    <div class="row justify-content-center">
+
+        <div class="col-lg-7 col-md-9">
 
 
-        <option value="">
-            Select Renter
-        </option>
+            <div class="mb-4">
+
+                <h1 class="page-title">
+                    Create Facility Rental
+                </h1>
+
+                <p class="text-muted">
+                    Create a confirmed facility rental for a renter
+                </p>
+
+            </div>
 
 
-        <option th:each="renter : ${renters}"
-                th:value="${renter.id}"
-                th:text="${renter.firstName
-                          + ' '
-                          + renter.lastName
-                          + ' - '
-                          + renter.email}">
-        </option>
+            <div class="card shadow-sm">
+
+                <div class="card-body p-4">
 
 
-    </select>
+                    <form th:action="@{/admin/rentals}"
+                          method="post">
 
 
-    <br><br>
+                        <!-- RENTER -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Renter
+                            </label>
 
 
-    <label>Sports Facility:</label>
+                            <select name="renterId"
+                                    class="form-select"
+                                    required>
 
-    <br>
-
-
-    <select name="facilityId"
-            required>
-
-
-        <option value="">
-            Select Facility
-        </option>
+                                <option value="">
+                                    Select Renter
+                                </option>
 
 
-        <option th:each="facility : ${facilities}"
-                th:value="${facility.id}"
-                th:text="${facility.name
-                          + ' - '
-                          + facility.type}">
-        </option>
+                                <option th:each="renter : ${renters}"
+                                        th:value="${renter.id}"
+                                        th:text="${renter.firstName
+                                                  + ' '
+                                                  + renter.lastName
+                                                  + ' - '
+                                                  + renter.email}">
+                                </option>
+
+                            </select>
+
+                        </div>
 
 
-    </select>
+                        <!-- SPORTS FACILITY -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Sports Facility
+                            </label>
 
 
-    <br><br>
+                            <select name="facilityId"
+                                    class="form-select"
+                                    required>
+
+                                <option value="">
+                                    Select Facility
+                                </option>
 
 
-    <label>Start Date / Time:</label>
+                                <option th:each="facility : ${facilities}"
+                                        th:value="${facility.id}"
+                                        th:text="${facility.name
+                                                  + ' - '
+                                                  + facility.type
+                                                  + ' - '
+                                                  + facility.location}">
+                                </option>
 
-    <br>
+                            </select>
 
-
-    <input type="datetime-local"
-           name="startDateTime"
-           required>
-
-
-    <br><br>
-
-
-    <label>End Date / Time:</label>
-
-    <br>
+                        </div>
 
 
-    <input type="datetime-local"
-           name="endDateTime"
-           required>
+                        <!-- START / END -->
+
+                        <div class="row">
 
 
-    <br><br>
+                            <!-- START -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label for="startDateTime"
+                                       class="form-label">
+
+                                    Start Date / Time
+
+                                </label>
 
 
-    <label>Purpose:</label>
+                                <input type="datetime-local"
+                                       name="startDateTime"
+                                       id="startDateTime"
+                                       class="form-control"
+                                       required>
 
-    <br>
-
-
-    <textarea name="purpose"
-              rows="5"
-              cols="50"
-              required>
-    </textarea>
+                            </div>
 
 
-    <br><br>
+                            <!-- END -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label for="endDateTime"
+                                       class="form-label">
+
+                                    End Date / Time
+
+                                </label>
 
 
-    <button type="submit">
+                                <input type="datetime-local"
+                                       name="endDateTime"
+                                       id="endDateTime"
+                                       class="form-control"
+                                       required>
 
-        Create Rental
-
-    </button>
-
-
-</form>
-
-
-<br>
+                            </div>
 
 
-<a th:href="@{/admin/rentals}">
+                        </div>
 
-    Cancel
 
-</a>
+                        <!-- PURPOSE -->
+
+                        <div class="mb-4">
+
+                            <label for="purpose"
+                                   class="form-label">
+
+                                Purpose
+
+                            </label>
+
+
+                            <textarea name="purpose"
+                                      id="purpose"
+                                      class="form-control"
+                                      rows="5"
+                                      placeholder="Example: Football training session"
+                                      required>
+                            </textarea>
+
+                        </div>
+
+
+                        <div class="alert alert-info">
+
+                            Past dates and times cannot be selected.
+
+                        </div>
+
+
+                        <!-- BUTTONS -->
+
+                        <div class="d-flex gap-2">
+
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                Create Rental
+
+                            </button>
+
+
+                            <a th:href="@{/admin/rentals}"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<!-- ============================================= -->
+<!-- DATE / TIME VALIDATION -->
+<!-- ============================================= -->
+
+<script>
+
+    function getLocalDateTime() {
+
+        const now = new Date();
+
+        const year =
+                now.getFullYear();
+
+        const month =
+                String(now.getMonth() + 1)
+                        .padStart(2, "0");
+
+        const day =
+                String(now.getDate())
+                        .padStart(2, "0");
+
+        const hours =
+                String(now.getHours())
+                        .padStart(2, "0");
+
+        const minutes =
+                String(now.getMinutes())
+                        .padStart(2, "0");
+
+
+        return year
+                + "-"
+                + month
+                + "-"
+                + day
+                + "T"
+                + hours
+                + ":"
+                + minutes;
+    }
+
+
+    const startInput =
+            document.getElementById(
+                    "startDateTime"
+            );
+
+    const endInput =
+            document.getElementById(
+                    "endDateTime"
+            );
+
+
+    /*
+     * Current local date/time.
+     */
+
+    const now =
+            getLocalDateTime();
+
+
+    /*
+     * Prevent selection of past date/time.
+     */
+
+    startInput.min = now;
+
+    endInput.min = now;
+
+
+    /*
+     * When Start changes,
+     * End cannot be earlier than Start.
+     */
+
+    startInput.addEventListener(
+            "change",
+            function () {
+
+
+                endInput.min =
+                        startInput.value;
+
+
+                /*
+                 * If an invalid End was already selected,
+                 * remove it.
+                 */
+
+                if (endInput.value
+                        && endInput.value
+                        <= startInput.value) {
+
+                    endInput.value = "";
+                }
+
+            }
+    );
+
+
+    /*
+     * Additional browser-side check.
+     */
+
+    endInput.addEventListener(
+            "change",
+            function () {
+
+
+                if (startInput.value
+                        && endInput.value
+                        <= startInput.value) {
+
+
+                    alert(
+                            "End date/time must be after start date/time."
+                    );
+
+
+                    endInput.value = "";
+
+                }
+
+            }
+    );
+
+</script>
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
 
 
 </body>

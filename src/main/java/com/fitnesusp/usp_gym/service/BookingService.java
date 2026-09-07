@@ -127,6 +127,14 @@ public class BookingService {
 
         // Find selected Fitness Class
         FitnessClass fitnessClass = fitnessClassService.getClassById(fitnessClassId);
+        
+        LocalDateTime classStart = LocalDateTime.of(fitnessClass.getDate(), fitnessClass.getStartTime());
+
+
+        if (classStart.isBefore( LocalDateTime.now())) {
+  
+            throw new IllegalStateException("You cannot book a fitness class that has already started.");
+        }
 
 
         // Check if this Member already has

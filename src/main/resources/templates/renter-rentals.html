@@ -3,6 +3,8 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
+<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html xmlns:th="http://www.thymeleaf.org">
 
@@ -13,12 +15,18 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
 
-    <title>My Facility Rentals - USP Fitness Club</title>
+    <title>
+        My Facility Rentals - USP Fitness Club
+    </title>
 
+
+    <!-- Bootstrap -->
 
     <link rel="stylesheet"
           th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
 
+
+    <!-- Our CSS -->
 
     <link rel="stylesheet"
           th:href="@{/css/app.css}">
@@ -29,18 +37,31 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <body>
 
 
+<!-- ======================================= -->
+<!-- RENTER NAVBAR -->
+<!-- ======================================= -->
+
 <div th:replace="~{fragments/renter-navbar :: renterNavbar}">
 </div>
 
 
+
+<!-- ======================================= -->
+<!-- PAGE -->
+<!-- ======================================= -->
+
 <div class="container page-container">
 
 
+    <!-- =================================== -->
     <!-- HEADER -->
+    <!-- =================================== -->
 
     <div class="d-flex
                 justify-content-between
                 align-items-center
+                flex-wrap
+                gap-3
                 mb-4">
 
 
@@ -51,7 +72,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </h1>
 
             <p class="text-muted mb-0">
+
                 View your requests and confirmed facility rentals
+
             </p>
 
         </div>
@@ -69,46 +92,73 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
 
-    <!-- SUCCESS -->
+    <!-- =================================== -->
+    <!-- SUCCESS MESSAGE -->
+    <!-- =================================== -->
 
     <div th:if="${successMessage}"
-         class="alert alert-success
-                alert-dismissible fade show">
+         class="alert
+                alert-success
+                alert-dismissible
+                fade
+                show">
+
 
         <span th:text="${successMessage}">
         </span>
 
+
         <button type="button"
                 class="btn-close"
-                data-bs-dismiss="alert">
+                data-bs-dismiss="alert"
+                aria-label="Close">
         </button>
+
 
     </div>
 
 
 
-    <!-- ERROR -->
+    <!-- =================================== -->
+    <!-- ERROR MESSAGE -->
+    <!-- =================================== -->
 
     <div th:if="${errorMessage}"
-         class="alert alert-danger
-                alert-dismissible fade show">
+         class="alert
+                alert-danger
+                alert-dismissible
+                fade
+                show">
+
 
         <span th:text="${errorMessage}">
         </span>
 
+
         <button type="button"
                 class="btn-close"
-                data-bs-dismiss="alert">
+                data-bs-dismiss="alert"
+                aria-label="Close">
         </button>
+
 
     </div>
 
 
 
+    <!-- =================================== -->
+    <!-- RENTALS -->
+    <!-- =================================== -->
+
     <div class="card shadow-sm">
 
-        <div class="card-body">
 
+        <div class="card-body p-0">
+
+
+            <!-- =========================== -->
+            <!-- TABLE -->
+            <!-- =========================== -->
 
             <div th:if="${!#lists.isEmpty(rentals)}"
                  class="table-responsive">
@@ -117,29 +167,62 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                 <table class="table
                               table-striped
                               table-hover
-                              align-middle">
+                              align-middle
+                              mb-0">
 
+
+                    <!-- =================== -->
+                    <!-- TABLE HEADER -->
+                    <!-- =================== -->
 
                     <thead class="table-dark">
 
 
                     <tr>
 
-                        <th>Facility</th>
+                        <th>
+                            Facility
+                        </th>
 
-                        <th>Type</th>
 
-                        <th>Location</th>
+                        <th>
+                            Type
+                        </th>
 
-                        <th>From</th>
 
-                        <th>To</th>
+                        <th>
+                            Location
+                        </th>
 
-                        <th>Purpose</th>
 
-                        <th>Status</th>
+                        <th>
+                            From
+                        </th>
 
-                        <th>Admin Comment</th>
+
+                        <th>
+                            To
+                        </th>
+
+
+                        <th>
+                            Purpose
+                        </th>
+
+
+                        <th>
+                            Status
+                        </th>
+
+
+                        <th>
+                            Admin Comment
+                        </th>
+
+
+                        <th>
+                            Action
+                        </th>
 
                     </tr>
 
@@ -148,67 +231,138 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
 
+                    <!-- =================== -->
+                    <!-- TABLE BODY -->
+                    <!-- =================== -->
+
                     <tbody>
 
 
                     <tr th:each="rental : ${rentals}">
 
 
+                        <!-- ================= -->
                         <!-- FACILITY -->
+                        <!-- ================= -->
 
                         <td>
 
                             <strong th:text="${rental.facility.name}">
+                                Facility
                             </strong>
 
                         </td>
 
 
 
+                        <!-- ================= -->
                         <!-- TYPE -->
+                        <!-- ================= -->
 
                         <td>
 
                             <span class="badge text-bg-info"
                                   th:text="${rental.facility.type}">
+
+                                TYPE
+
                             </span>
 
                         </td>
 
 
 
+                        <!-- ================= -->
                         <!-- LOCATION -->
-
-                        <td th:text="${rental.facility.location}">
-                        </td>
-
-
-
-                        <!-- START -->
-
-                        <td th:text="${rental.startDateTime}">
-                        </td>
-
-
-
-                        <!-- END -->
-
-                        <td th:text="${rental.endDateTime}">
-                        </td>
-
-
-
-                        <!-- PURPOSE -->
-
-                        <td th:text="${rental.purpose}">
-                        </td>
-
-
-
-                        <!-- STATUS -->
+                        <!-- ================= -->
 
                         <td>
 
+
+                            <span th:if="${rental.facility.location != null
+                                         and !rental.facility.location.isEmpty()}"
+                                  th:text="${rental.facility.location}">
+
+                                Location
+
+                            </span>
+
+
+                            <span th:unless="${rental.facility.location != null
+                                             and !rental.facility.location.isEmpty()}"
+                                  class="text-muted">
+
+                                —
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- ================= -->
+                        <!-- START DATE / TIME -->
+                        <!-- ================= -->
+
+                        <td>
+
+                            <span th:text="${#temporals.format(
+                                            rental.startDateTime,
+                                            'dd MMM yyyy HH:mm'
+                                            )}">
+
+                                Start
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- ================= -->
+                        <!-- END DATE / TIME -->
+                        <!-- ================= -->
+
+                        <td>
+
+                            <span th:text="${#temporals.format(
+                                            rental.endDateTime,
+                                            'dd MMM yyyy HH:mm'
+                                            )}">
+
+                                End
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- ================= -->
+                        <!-- PURPOSE -->
+                        <!-- ================= -->
+
+                        <td>
+
+                            <span th:text="${rental.purpose}">
+
+                                Purpose
+
+                            </span>
+
+                        </td>
+
+
+
+                        <!-- ================= -->
+                        <!-- STATUS -->
+                        <!-- ================= -->
+
+                        <td>
+
+
+                            <!-- PENDING -->
 
                             <span th:if="${rental.status.name() == 'PENDING'}"
                                   class="badge text-bg-warning">
@@ -218,6 +372,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             </span>
 
 
+
+                            <!-- CONFIRMED -->
+
                             <span th:if="${rental.status.name() == 'CONFIRMED'}"
                                   class="badge text-bg-success">
 
@@ -226,6 +383,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             </span>
 
 
+
+                            <!-- REJECTED -->
+
                             <span th:if="${rental.status.name() == 'REJECTED'}"
                                   class="badge text-bg-danger">
 
@@ -233,6 +393,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                             </span>
 
+
+
+                            <!-- CANCELLED -->
 
                             <span th:if="${rental.status.name() == 'CANCELLED'}"
                                   class="badge text-bg-secondary">
@@ -246,7 +409,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
 
+                        <!-- ================= -->
                         <!-- ADMIN COMMENT -->
+                        <!-- ================= -->
 
                         <td>
 
@@ -254,6 +419,9 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             <span th:if="${rental.adminComment != null
                                          and !rental.adminComment.isEmpty()}"
                                   th:text="${rental.adminComment}">
+
+                                Comment
+
                             </span>
 
 
@@ -262,6 +430,84 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                                   class="text-muted">
 
                                 —
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- ================= -->
+                        <!-- ACTION -->
+                        <!-- ================= -->
+
+                        <td style="min-width: 180px;">
+
+
+                            <!-- ================= -->
+                            <!-- PENDING -->
+                            <!-- RENTER CAN WITHDRAW -->
+                            <!-- ================= -->
+
+                            <form th:if="${rental.status.name() == 'PENDING'}"
+                                  th:action="@{/renter/rentals/cancel/{id}
+                                             (id=${rental.id})}"
+                                  method="post">
+
+
+                                <button type="submit"
+                                        class="btn
+                                               btn-sm
+                                               btn-outline-danger"
+
+                                        onclick="return confirm(
+                                        'Are you sure you want to withdraw this rental request?'
+                                        );">
+
+                                    Withdraw Request
+
+                                </button>
+
+
+                            </form>
+
+
+
+                            <!-- ================= -->
+                            <!-- CONFIRMED -->
+                            <!-- ================= -->
+
+                            <span th:if="${rental.status.name() == 'CONFIRMED'}"
+                                  class="text-muted">
+
+                                No actions
+
+                            </span>
+
+
+
+                            <!-- ================= -->
+                            <!-- REJECTED -->
+                            <!-- ================= -->
+
+                            <span th:if="${rental.status.name() == 'REJECTED'}"
+                                  class="text-muted">
+
+                                No actions
+
+                            </span>
+
+
+
+                            <!-- ================= -->
+                            <!-- CANCELLED -->
+                            <!-- ================= -->
+
+                            <span th:if="${rental.status.name() == 'CANCELLED'}"
+                                  class="text-muted">
+
+                                Withdrawn
 
                             </span>
 
@@ -282,19 +528,27 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
 
-            <!-- EMPTY -->
+            <!-- =================================== -->
+            <!-- NO RENTALS -->
+            <!-- =================================== -->
 
             <div th:if="${#lists.isEmpty(rentals)}"
-                 class="text-center text-muted p-5">
+                 class="text-center
+                        text-muted
+                        p-5">
 
 
                 <h5>
+
                     No facility rentals yet
+
                 </h5>
 
 
-                <p>
+                <p class="mb-3">
+
                     You have not submitted any facility rental requests.
+
                 </p>
 
 
@@ -311,15 +565,23 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
         </div>
 
+
     </div>
 
 
 </div>
 
 
+
+<!-- ======================================= -->
+<!-- BOOTSTRAP JS -->
+<!-- ======================================= -->
+
 <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
 </script>
 
 
 </body>
+
 </html>
+
