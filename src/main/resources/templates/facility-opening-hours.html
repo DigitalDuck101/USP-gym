@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Facility Opening Hours - USP Fitness Centre</title>
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+
+<body>
+
+
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
+
+
+<div class="container page-container">
+
+
+    <!-- HEADER -->
+    <div class="d-flex
+                justify-content-between
+                align-items-center
+                flex-wrap
+                gap-3
+                mb-4">
+
+        <div>
+
+            <h1 class="page-title">
+                Facility Opening Hours
+            </h1>
+
+            <h5 class="mb-1"
+                th:text="${facility.name}">
+                Facility Name
+            </h5>
+
+            <p class="text-muted mb-0">
+
+                <span th:text="${facility.type}">
+                    Type
+                </span>
+
+                <span> - </span>
+
+                <span th:text="${facility.location}">
+                    Location
+                </span>
+
+            </p>
+
+        </div>
+
+
+        <div class="d-flex gap-2">
+
+            <a th:href="@{/admin/facilities/{id}/opening-hours/new
+                         (id=${facility.id})}"
+               class="btn btn-primary">
+
+                + Add Opening Hours
+
+            </a>
+
+
+            <a th:href="@{/admin/facilities}"
+               class="btn btn-outline-secondary">
+
+                Back to Facilities
+
+            </a>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- SUCCESS -->
+    <div th:if="${successMessage}"
+         class="alert alert-success
+                alert-dismissible
+                fade show">
+
+        <span th:text="${successMessage}">
+        </span>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+    </div>
+
+
+
+    <!-- ERROR -->
+    <div th:if="${errorMessage}"
+         class="alert alert-danger
+                alert-dismissible
+                fade show">
+
+        <span th:text="${errorMessage}">
+        </span>
+
+        <button type="button"
+                class="btn-close"
+                data-bs-dismiss="alert">
+        </button>
+
+    </div>
+
+
+
+    <!-- INFORMATION -->
+    <div class="alert alert-info">
+
+        <strong>Opening Hours:</strong>
+
+        A facility can have one opening-hours record
+        for each day of the week.
+
+        If no opening hours exist for a particular day,
+        that day will later be treated as closed.
+
+    </div>
+
+
+
+    <!-- TABLE -->
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+
+            <div th:if="${!#lists.isEmpty(openingHours)}"
+                 class="table-responsive">
+
+
+                <table class="table
+                              table-striped
+                              table-hover
+                              align-middle">
+
+
+                    <thead class="table-dark">
+
+                    <tr>
+
+                        <th>Day</th>
+
+                        <th>Opening Time</th>
+
+                        <th>Closing Time</th>
+
+                        <th>Actions</th>
+
+                    </tr>
+
+                    </thead>
+
+
+                    <tbody>
+
+
+                    <tr th:each="hour : ${openingHours}">
+
+
+                        <!-- DAY -->
+                        <td>
+
+                            <strong th:text="${hour.dayOfWeek}">
+                                MONDAY
+                            </strong>
+
+                        </td>
+
+
+                        <!-- OPENING -->
+                        <td th:text="${hour.openingTime}">
+                            08:00
+                        </td>
+
+
+                        <!-- CLOSING -->
+                        <td th:text="${hour.closingTime}">
+                            20:00
+                        </td>
+
+
+                        <!-- ACTIONS -->
+                        <td>
+
+                            <div class="d-flex gap-2 flex-wrap">
+
+
+                                <!-- EDIT -->
+                                <a th:href="@{/admin/facilities/{facilityId}/opening-hours/edit/{hourId}
+                                             (facilityId=${facility.id},
+                                              hourId=${hour.id})}"
+                                   class="btn
+                                          btn-sm
+                                          btn-outline-primary">
+
+                                    Edit
+
+                                </a>
+
+
+                                <!-- DELETE -->
+                                <form th:action="@{/admin/facilities/{facilityId}/opening-hours/delete/{hourId}
+                                                  (facilityId=${facility.id},
+                                                   hourId=${hour.id})}"
+                                      method="post">
+
+
+                                    <button type="submit"
+                                            class="btn
+                                                   btn-sm
+                                                   btn-outline-danger"
+                                            onclick="
+                                            return confirm(
+                                            'Remove these opening hours?'
+                                            );">
+
+                                        Remove
+
+                                    </button>
+
+                                </form>
+
+
+                            </div>
+
+                        </td>
+
+
+                    </tr>
+
+
+                    </tbody>
+
+
+                </table>
+
+            </div>
+
+
+
+            <!-- EMPTY -->
+            <div th:if="${#lists.isEmpty(openingHours)}"
+                 class="text-center
+                        text-muted
+                        p-5">
+
+                <h5>
+                    No Opening Hours Added
+                </h5>
+
+                <p>
+                    This facility does not currently have
+                    any configured opening hours.
+                </p>
+
+
+                <a th:href="@{/admin/facilities/{id}/opening-hours/new
+                             (id=${facility.id})}"
+                   class="btn btn-primary">
+
+                    + Add First Opening Hours
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+
+</body>
+
+</html>

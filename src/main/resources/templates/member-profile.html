@@ -236,6 +236,75 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                     <!-- INFORMATION -->
 
                     <div class="row mt-4">
+                        <!-- MEMBERSHIP STATUS FOR RENTER -->
+                        <div class="col-md-6 mb-3"
+                             th:if="${member.memberType != null
+     and member.memberType.name() == 'RENTER'}">
+
+                            <div class="text-muted small">
+                                Membership Status
+                            </div>
+
+                            <span th:if="${member.membershipStatus != null
+                 and member.membershipStatus.name() == 'ACTIVE'}"
+                                  class="badge text-bg-success">
+        ACTIVE
+    </span>
+
+                            <span th:if="${member.membershipStatus != null
+                 and member.membershipStatus.name() == 'PENDING'}"
+                                  class="badge text-bg-warning">
+        PENDING
+    </span>
+
+                            <span th:if="${member.membershipStatus != null
+                 and member.membershipStatus.name() == 'INACTIVE'}"
+                                  class="badge text-bg-danger">
+        INACTIVE
+    </span>
+
+                            <span th:if="${member.membershipStatus != null
+                 and member.membershipStatus.name() == 'EXPIRED'}"
+                                  class="badge text-bg-danger">
+        EXPIRED
+    </span>
+
+                            <span th:if="${member.membershipStatus != null
+                 and member.membershipStatus.name() == 'NOT_REQUIRED'}"
+                                  class="badge text-bg-secondary">
+        NOT REQUIRED
+    </span>
+
+                            <span th:if="${member.membershipStatus == null}"
+                                  class="badge text-bg-secondary">
+        NOT VERIFIED
+    </span>
+
+                        </div>
+
+
+                        <!-- MEMBERSHIP EXPIRY FOR RENTER -->
+                        <div class="col-md-6 mb-3"
+                             th:if="${member.memberType != null
+     and member.memberType.name() == 'RENTER'}">
+
+                            <div class="text-muted small">
+                                Membership Expiry Date
+                            </div>
+
+                            <strong th:if="${member.membershipExpiryDate != null}"
+                                    th:text="${#temporals.format(
+                      member.membershipExpiryDate,
+                      'dd/MM/yyyy'
+                     )}">
+                            </strong>
+
+                            <span th:if="${member.membershipExpiryDate == null}"
+                                  class="text-muted">
+        No expiry date set
+    </span>
+
+                        </div>
 
 
                         <!-- MEMBER ID -->
@@ -375,7 +444,46 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
             </div>
 
+            <!-- ======================== -->
+            <!-- FACILITY AVAILABILITY -->
+            <!-- ======================== -->
 
+            <div class="card shadow-sm mb-4">
+
+                <div class="card-body p-4">
+
+                    <div class="d-flex
+                    justify-content-between
+                    align-items-center
+                    flex-wrap
+                    gap-3">
+
+                        <div>
+
+                            <h5 class="mb-2">
+                                Facility Availability
+                            </h5>
+
+                            <p class="text-muted mb-0">
+                                Check live facility bookings and unavailable periods
+                                before making a booking request.
+                            </p>
+
+                        </div>
+
+
+                        <a th:href="@{/member/availability}"
+                           class="btn btn-primary">
+
+                            View Availability
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
             <!-- ======================== -->
             <!-- STUDENT ACTIONS -->
             <!-- ======================== -->
@@ -410,6 +518,16 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
                             My Bookings
 
                         </a>
+                        <li class="nav-item">
+
+                            <a class="nav-link"
+                               th:href="@{/member/availability}">
+
+                                Facility Availability
+
+                            </a>
+
+                        </li>
 
 
                     </div>

@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 <html xmlns:th="http://www.thymeleaf.org">
 
 <body>
@@ -12,16 +8,21 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
     <div class="container">
 
-        <a class="navbar-brand"
-           th:href="@{/members}">
-            USP Fitness Club
+        <!-- BRAND -->
+        <a class="navbar-brand fw-bold"
+           th:href="@{/admin/dashboard}">
+            USP Fitness Centre
         </a>
 
 
+        <!-- MOBILE TOGGLE -->
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#adminNavbar">
+                data-bs-target="#adminNavbar"
+                aria-controls="adminNavbar"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
 
             <span class="navbar-toggler-icon"></span>
 
@@ -31,73 +32,118 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="collapse navbar-collapse"
              id="adminNavbar">
 
-
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
-
+                <!-- DASHBOARD -->
                 <li class="nav-item">
 
-                    <a class="nav-link"
-                       th:href="@{/members}">
+                    <a class="nav-link admin-nav-link"
+                       th:href="@{/admin/dashboard}"
+                       data-section="dashboard">
+
+                        Dashboard
+
+                    </a>
+
+                </li>
+
+
+                <!-- MEMBERS -->
+                <li class="nav-item">
+
+                    <a class="nav-link admin-nav-link"
+                       th:href="@{/members}"
+                       data-section="members">
+
                         Members
+
                     </a>
 
                 </li>
 
 
+                <!-- TRAINERS -->
                 <li class="nav-item">
 
-                    <a class="nav-link"
-                       th:href="@{/trainers}">
+                    <a class="nav-link admin-nav-link"
+                       th:href="@{/trainers}"
+                       data-section="trainers">
+
                         Trainers
+
                     </a>
 
                 </li>
 
 
+                <!-- FITNESS CLASSES -->
                 <li class="nav-item">
 
-                    <a class="nav-link"
-                       th:href="@{/fitness-classes}">
+                    <a class="nav-link admin-nav-link"
+                       th:href="@{/fitness-classes}"
+                       data-section="classes">
+
                         Fitness Classes
+
                     </a>
 
                 </li>
 
 
+                <!-- STUDENT APPROVALS -->
                 <li class="nav-item">
 
-                    <a class="nav-link"
-                       th:href="@{/admin/student-approvals}">
+                    <a class="nav-link admin-nav-link"
+                       th:href="@{/admin/student-approvals}"
+                       data-section="approvals">
+
                         Student Approvals
+
                     </a>
 
                 </li>
 
 
+                <!-- SPORTS FACILITIES -->
                 <li class="nav-item">
 
-                    <a class="nav-link"
-                       th:href="@{/admin/facilities}">
+                    <a class="nav-link admin-nav-link"
+                       th:href="@{/admin/facilities}"
+                       data-section="facilities">
+
                         Sports Facilities
+
                     </a>
 
                 </li>
-
 
                 <li class="nav-item">
 
                     <a class="nav-link"
-                       th:href="@{/admin/rentals}">
-                        Facility Rentals
+                       th:href="@{/admin/blockouts}">
+
+                        Facility Block-Outs
+
                     </a>
 
                 </li>
+                <!-- FACILITY RENTALS -->
+                <li class="nav-item">
 
+                    <a class="nav-link admin-nav-link"
+                       th:href="@{/admin/rentals}"
+                       data-section="rentals">
+
+                        Facility Rentals
+
+                    </a>
+
+                </li>
 
             </ul>
 
 
+            <!-- LOGOUT -->
             <form th:action="@{/logout}"
                   method="post"
                   class="d-flex">
@@ -111,12 +157,164 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
             </form>
 
-
         </div>
 
     </div>
 
+
+    <!-- ACTIVE PAGE + MOBILE NAVBAR -->
+    <script>
+
+        document.addEventListener(
+            "DOMContentLoaded",
+            function () {
+
+                const currentPath =
+                    window.location.pathname;
+
+                const links =
+                    document.querySelectorAll(
+                        ".admin-nav-link"
+                    );
+
+
+                links.forEach(function (link) {
+
+                    link.classList.remove("active");
+
+
+                    const section =
+                        link.dataset.section;
+
+
+                    // DASHBOARD
+                    if (
+                        section === "dashboard" &&
+                        currentPath === "/admin/dashboard"
+                    ) {
+
+                        link.classList.add("active");
+
+                    }
+
+
+                    // MEMBERS
+                    else if (
+                        section === "members" &&
+                        currentPath.startsWith("/members")
+                    ) {
+
+                        link.classList.add("active");
+
+                    }
+
+
+                    // TRAINERS
+                    else if (
+                        section === "trainers" &&
+                        currentPath.startsWith("/trainers")
+                    ) {
+
+                        link.classList.add("active");
+
+                    }
+
+
+                    // FITNESS CLASSES
+                    else if (
+                        section === "classes" &&
+                        currentPath.startsWith("/fitness-classes")
+                    ) {
+
+                        link.classList.add("active");
+
+                    }
+
+
+                    // STUDENT APPROVALS
+                    else if (
+                        section === "approvals" &&
+                        currentPath.startsWith(
+                            "/admin/student-approvals"
+                        )
+                    ) {
+
+                        link.classList.add("active");
+
+                    }
+
+
+                    // SPORTS FACILITIES
+                    else if (
+                        section === "facilities" &&
+                        currentPath.startsWith(
+                            "/admin/facilities"
+                        )
+                    ) {
+
+                        link.classList.add("active");
+
+                    }
+
+
+                    // FACILITY RENTALS
+                    else if (
+                        section === "rentals" &&
+                        currentPath.startsWith(
+                            "/admin/rentals"
+                        )
+                    ) {
+
+                        link.classList.add("active");
+
+                    }
+
+                });
+
+
+                // =========================================
+                // CLOSE MOBILE MENU AFTER CLICK
+                // =========================================
+
+                links.forEach(function (link) {
+
+                    link.addEventListener(
+                        "click",
+                        function () {
+
+                            const navbar =
+                                document.getElementById(
+                                    "adminNavbar"
+                                );
+
+                            if (
+                                navbar &&
+                                navbar.classList.contains("show") &&
+                                typeof bootstrap !== "undefined"
+                            ) {
+
+                                const collapse =
+                                    bootstrap.Collapse
+                                        .getOrCreateInstance(
+                                            navbar
+                                        );
+
+                                collapse.hide();
+
+                            }
+
+                        }
+                    );
+
+                });
+
+            }
+        );
+
+    </script>
+
 </nav>
 
 </body>
+
 </html>

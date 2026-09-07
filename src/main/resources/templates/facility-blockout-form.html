@@ -1,8 +1,4 @@
 <!DOCTYPE html>
-<!--
-Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
-Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
--->
 
 <html xmlns:th="http://www.thymeleaf.org">
 
@@ -13,12 +9,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
 
-    <title>Request Facility Rental - USP Fitness Club</title>
+    <title>Create Facility Block-Out - USP Fitness Centre</title>
 
 
     <link rel="stylesheet"
           th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
-
 
     <link rel="stylesheet"
           th:href="@{/css/app.css}">
@@ -29,7 +24,8 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 <body>
 
 
-<div th:replace="~{fragments/renter-navbar :: renterNavbar}">
+<!-- ADMIN NAVBAR -->
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
 </div>
 
 
@@ -41,118 +37,95 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
         <div class="col-lg-7 col-md-9">
 
 
+            <!-- HEADER -->
             <div class="mb-4">
 
                 <h1 class="page-title">
-                    Request Facility Rental
+                    Create Facility Block-Out
                 </h1>
 
                 <p class="text-muted">
-                    Submit a rental request for administrator approval
+                    Mark a facility unavailable for a selected date and time.
                 </p>
 
             </div>
 
 
 
+            <!-- FORM CARD -->
             <div class="card shadow-sm">
-
 
                 <div class="card-body p-4">
 
 
-                    <form th:action="@{/renter/rental-request}"
+                    <form th:action="@{/admin/blockouts}"
                           method="post">
 
 
                         <!-- FACILITY -->
-
                         <div class="mb-3">
 
                             <label class="form-label">
                                 Sports Facility
                             </label>
 
-
                             <select name="facilityId"
                                     class="form-select"
                                     required>
 
-
                                 <option value="">
-                                    Select Sports Facility
+                                    Select Facility
                                 </option>
-
 
                                 <option th:each="facility : ${facilities}"
                                         th:value="${facility.id}"
-                                        th:selected="${selectedFacilityId != null
-                      and selectedFacilityId == facility.id}"
                                         th:text="${facility.name
-                  + ' - '
-                  + facility.type
-                  + ' - '
-                  + facility.location}">
+                                                  + ' - '
+                                                  + facility.type
+                                                  + ' - '
+                                                  + facility.location}">
                                 </option>
-
 
                             </select>
 
-
                             <div class="form-text">
-
-                                Only currently active facilities are shown.
-
+                                Only active facilities are shown.
                             </div>
-
 
                         </div>
 
 
 
                         <!-- TIME -->
-
                         <div class="row">
 
 
+                            <!-- START -->
                             <div class="col-md-6 mb-3">
 
                                 <label class="form-label">
                                     Start Date / Time
                                 </label>
 
-
                                 <input type="datetime-local"
-                                       id="startDateTime"
                                        name="startDateTime"
                                        class="form-control"
                                        required>
 
-                                <div class="form-text">
-                                    Select the date and time you want your booking to begin.
-                                </div>
-
                             </div>
 
 
-
+                            <!-- END -->
                             <div class="col-md-6 mb-3">
 
                                 <label class="form-label">
                                     End Date / Time
                                 </label>
 
-
                                 <input type="datetime-local"
-                                       id="endDateTime"
                                        name="endDateTime"
                                        class="form-control"
-                                       required
-                                       readonly>
-
-                                <div class="form-text">
-                                    Standard bookings are automatically set to 1 hour.
-                                </div>
+                                       required>
 
                             </div>
 
@@ -161,63 +134,59 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
 
-                        <!-- PURPOSE -->
-
+                        <!-- REASON -->
                         <div class="mb-4">
 
                             <label class="form-label">
-                                Purpose of Rental
+                                Reason
                             </label>
 
-
-                            <textarea name="purpose"
+                            <textarea name="reason"
                                       class="form-control"
-                                      rows="5"
-                                      placeholder="Example: Football training session"
-                                      required>
+                                      rows="4"
+                                      maxlength="500"
+                                      placeholder="Example: Maintenance work, cleaning, private event">
                             </textarea>
+
+                            <div class="form-text">
+                                Optional, but recommended for admin records.
+                            </div>
 
                         </div>
 
 
 
                         <!-- INFORMATION -->
-
                         <div class="alert alert-info">
 
-                            <strong>How it works:</strong>
+                            <strong>Important:</strong>
 
                             <br>
 
-                            Your request will be sent to the administrator.
-
-                            The rental is not confirmed until the
-                            administrator approves it.
+                            Users will not be allowed to make facility bookings
+                            that overlap this block-out period.
 
                         </div>
 
 
 
                         <!-- BUTTONS -->
-
                         <div class="d-flex gap-2">
-
 
                             <button type="submit"
                                     class="btn btn-primary">
 
-                                Send Request
+                                Create Block-Out
 
                             </button>
 
 
-                            <a th:href="@{/renter/rentals}"
+                            <a th:href="@{/admin/blockouts}"
                                class="btn btn-outline-secondary">
 
                                 Cancel
 
                             </a>
-
 
                         </div>
 
@@ -226,7 +195,6 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
                 </div>
-
 
             </div>
 
@@ -239,11 +207,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 </div>
 
 
+
 <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
-</script>
-<script th:src="@{/js/rental-request.js}">
 </script>
 
 
 </body>
+
 </html>

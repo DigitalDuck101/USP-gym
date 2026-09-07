@@ -9,18 +9,13 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1">
 
-
     <title>Members - USP Fitness Club</title>
 
-
     <!-- Bootstrap -->
-
     <link rel="stylesheet"
           th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
 
-
     <!-- Our CSS -->
-
     <link rel="stylesheet"
           th:href="@{/css/app.css}">
 
@@ -31,22 +26,18 @@
 
 
 <!-- ADMIN NAVBAR -->
-
 <div th:replace="~{fragments/admin-navbar :: adminNavbar}">
 </div>
-
 
 
 <div class="container page-container">
 
 
     <!-- PAGE HEADER -->
-
     <div class="d-flex
                 justify-content-between
                 align-items-center
                 mb-4">
-
 
         <div>
 
@@ -73,15 +64,12 @@
 
 
     <!-- SUCCESS MESSAGE -->
-
     <div th:if="${successMessage}"
          class="alert alert-success alert-dismissible fade show"
          role="alert">
 
-
         <span th:text="${successMessage}">
         </span>
-
 
         <button type="button"
                 class="btn-close"
@@ -93,15 +81,12 @@
 
 
     <!-- ERROR MESSAGE -->
-
     <div th:if="${errorMessage}"
          class="alert alert-danger alert-dismissible fade show"
          role="alert">
 
-
         <span th:text="${errorMessage}">
         </span>
-
 
         <button type="button"
                 class="btn-close"
@@ -113,14 +98,12 @@
 
 
     <!-- MEMBER TABLE CARD -->
-
     <div class="card shadow-sm">
-
 
         <div class="card-body">
 
-
-            <div class="table-responsive">
+            <div th:if="${!#lists.isEmpty(members)}"
+                 class="table-responsive">
 
 
                 <table class="table
@@ -130,7 +113,6 @@
 
 
                     <thead class="table-dark">
-
 
                     <tr>
 
@@ -148,10 +130,15 @@
 
                         <th>Verification</th>
 
+                        <th>Membership</th>
+
+                        <th>Expiry Date</th>
+
+                        <th>Account</th>
+
                         <th>Actions</th>
 
                     </tr>
-
 
                     </thead>
 
@@ -163,14 +150,18 @@
                     <tr th:each="member : ${members}">
 
 
+                        <!-- ================================= -->
                         <!-- ID -->
+                        <!-- ================================= -->
 
                         <td th:text="${member.id}">
                         </td>
 
 
 
+                        <!-- ================================= -->
                         <!-- MEMBER TYPE -->
+                        <!-- ================================= -->
 
                         <td>
 
@@ -195,21 +186,33 @@
                             </span>
 
 
+                            <span th:if="${member.memberType == null}"
+                                  class="badge text-bg-secondary">
+
+                                NOT SET
+
+                            </span>
+
+
                         </td>
 
 
 
+                        <!-- ================================= -->
                         <!-- STUDENT ID -->
+                        <!-- ================================= -->
 
                         <td>
 
 
-                            <span th:if="${member.studentId != null}"
+                            <span th:if="${member.studentId != null
+                                         and !member.studentId.isEmpty()}"
                                   th:text="${member.studentId}">
                             </span>
 
 
-                            <span th:if="${member.studentId == null}"
+                            <span th:unless="${member.studentId != null
+                                             and !member.studentId.isEmpty()}"
                                   class="text-muted">
 
                                 —
@@ -221,7 +224,9 @@
 
 
 
+                        <!-- ================================= -->
                         <!-- NAME -->
+                        <!-- ================================= -->
 
                         <td>
 
@@ -239,24 +244,30 @@
 
 
 
+                        <!-- ================================= -->
                         <!-- EMAIL -->
+                        <!-- ================================= -->
 
                         <td th:text="${member.email}">
                         </td>
 
 
 
+                        <!-- ================================= -->
                         <!-- PHONE -->
+                        <!-- ================================= -->
 
                         <td>
 
 
-                            <span th:if="${member.phone != null}"
+                            <span th:if="${member.phone != null
+                                         and !member.phone.isEmpty()}"
                                   th:text="${member.phone}">
                             </span>
 
 
-                            <span th:if="${member.phone == null}"
+                            <span th:unless="${member.phone != null
+                                             and !member.phone.isEmpty()}"
                                   class="text-muted">
 
                                 —
@@ -268,7 +279,9 @@
 
 
 
+                        <!-- ================================= -->
                         <!-- VERIFICATION STATUS -->
+                        <!-- ================================= -->
 
                         <td>
 
@@ -283,7 +296,6 @@
                             </span>
 
 
-
                             <span th:if="${member.verificationStatus != null
                                          and member.verificationStatus.name()
                                          == 'PENDING'}"
@@ -292,7 +304,6 @@
                                 PENDING
 
                             </span>
-
 
 
                             <span th:if="${member.verificationStatus != null
@@ -305,7 +316,6 @@
                             </span>
 
 
-
                             <span th:if="${member.verificationStatus != null
                                          and member.verificationStatus.name()
                                          == 'NOT_REQUIRED'}"
@@ -316,22 +326,166 @@
                             </span>
 
 
+                            <span th:if="${member.verificationStatus == null}"
+                                  class="badge text-bg-secondary">
+
+                                NOT SET
+
+                            </span>
+
+
                         </td>
 
 
 
-                        <!-- ACTIONS -->
+                        <!-- ================================= -->
+                        <!-- MEMBERSHIP STATUS -->
+                        <!-- ================================= -->
 
                         <td>
 
 
-                            <div class="d-flex gap-2">
+                            <span th:if="${member.membershipStatus != null
+                                         and member.membershipStatus.name()
+                                         == 'ACTIVE'}"
+                                  class="badge text-bg-success">
+
+                                ACTIVE
+
+                            </span>
+
+
+                            <span th:if="${member.membershipStatus != null
+                                         and member.membershipStatus.name()
+                                         == 'PENDING'}"
+                                  class="badge text-bg-warning">
+
+                                PENDING
+
+                            </span>
+
+
+                            <span th:if="${member.membershipStatus != null
+                                         and member.membershipStatus.name()
+                                         == 'INACTIVE'}"
+                                  class="badge text-bg-danger">
+
+                                INACTIVE
+
+                            </span>
+
+
+                            <span th:if="${member.membershipStatus != null
+                                         and member.membershipStatus.name()
+                                         == 'EXPIRED'}"
+                                  class="badge text-bg-danger">
+
+                                EXPIRED
+
+                            </span>
+
+
+                            <span th:if="${member.membershipStatus != null
+                                         and member.membershipStatus.name()
+                                         == 'NOT_REQUIRED'}"
+                                  class="badge text-bg-secondary">
+
+                                NOT REQUIRED
+
+                            </span>
+
+
+                            <span th:if="${member.membershipStatus == null}"
+                                  class="badge text-bg-secondary">
+
+                                NOT SET
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- MEMBERSHIP EXPIRY -->
+                        <!-- ================================= -->
+
+                        <td>
+
+
+                            <span th:if="${member.membershipExpiryDate != null}"
+                                  th:text="${#temporals.format(
+                                            member.membershipExpiryDate,
+                                            'dd/MM/yyyy'
+                                           )}">
+                            </span>
+
+
+                            <span th:if="${member.membershipExpiryDate == null}"
+                                  class="text-muted">
+
+                                —
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- ACCOUNT STATUS -->
+                        <!-- ================================= -->
+
+                        <td>
+
+
+                            <span th:if="${member.appUser != null
+                                         and member.appUser.enabled}"
+                                  class="badge text-bg-success">
+
+                                ACTIVE
+
+                            </span>
+
+
+                            <span th:if="${member.appUser != null
+                                         and !member.appUser.enabled}"
+                                  class="badge text-bg-danger">
+
+                                SUSPENDED
+
+                            </span>
+
+
+                            <span th:if="${member.appUser == null}"
+                                  class="badge text-bg-secondary">
+
+                                NO ACCOUNT
+
+                            </span>
+
+
+                        </td>
+
+
+
+                        <!-- ================================= -->
+                        <!-- ACTIONS -->
+                        <!-- ================================= -->
+
+                        <td>
+
+
+                            <div class="d-flex
+                                        gap-2
+                                        flex-wrap">
 
 
                                 <!-- EDIT -->
-
                                 <a th:href="@{/members/edit/{id}
-                                   (id=${member.id})}"
+                                           (id=${member.id})}"
                                    class="btn
                                           btn-sm
                                           btn-outline-primary">
@@ -342,10 +496,65 @@
 
 
 
-                                <!-- DELETE -->
+                                <!-- MEMBERSHIP -->
+                                <a th:href="@{/admin/members/{id}/membership
+                                           (id=${member.id})}"
+                                   class="btn
+                                          btn-sm
+                                          btn-outline-success">
 
+                                    Membership
+
+                                </a>
+
+
+
+                                <!-- SUSPEND / REINSTATE -->
+                                <form th:if="${member.appUser != null}"
+                                      th:action="@{/members/toggle-account/{id}
+                                                 (id=${member.id})}"
+                                      method="post">
+
+
+                                    <!-- SUSPEND -->
+                                    <button th:if="${member.appUser.enabled}"
+                                            type="submit"
+                                            class="btn
+                                                   btn-sm
+                                                   btn-outline-warning"
+                                            onclick="
+                                            return confirm(
+                                            'Suspend this member account?'
+                                            );">
+
+                                        Suspend
+
+                                    </button>
+
+
+                                    <!-- REINSTATE -->
+                                    <button th:unless="${member.appUser.enabled}"
+                                            type="submit"
+                                            class="btn
+                                                   btn-sm
+                                                   btn-outline-success"
+                                            onclick="
+                                            return confirm(
+                                            'Reinstate this member account?'
+                                            );">
+
+                                        Reinstate
+
+                                    </button>
+
+
+                                </form>
+
+
+
+                                <!-- DELETE -->
                                 <form th:action="@{/members/delete/{id}
-                                        (id=${member.id})}"
+                                                 (id=${member.id})}"
                                       method="post">
 
 
@@ -353,7 +562,6 @@
                                             class="btn
                                                    btn-sm
                                                    btn-outline-danger"
-
                                             onclick="
                                             return confirm(
                                             'Delete this member?'
@@ -387,17 +595,23 @@
 
 
             <!-- EMPTY TABLE -->
-
             <div th:if="${#lists.isEmpty(members)}"
                  class="text-center text-muted p-5">
 
-
-                <h5>No members found</h5>
+                <h5>
+                    No members found
+                </h5>
 
                 <p>
                     Add the first student or renter.
                 </p>
 
+                <a th:href="@{/members/new}"
+                   class="btn btn-primary">
+
+                    + Add Member
+
+                </a>
 
             </div>
 
@@ -412,7 +626,6 @@
 
 
 <!-- Bootstrap JavaScript -->
-
 <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
 </script>
 

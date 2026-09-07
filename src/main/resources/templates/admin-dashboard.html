@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>Admin Dashboard - USP Fitness Centre</title>
+
+    <!-- Bootstrap -->
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/admin-dashboard.css}">
+</head>
+
+
+<body>
+
+
+<!-- ================================================= -->
+<!-- ADMIN NAVBAR -->
+<!-- ================================================= -->
+
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- MAIN DASHBOARD -->
+<!-- ================================================= -->
+
+<div class="container dashboard-container">
+
+
+    <!-- ================================================= -->
+    <!-- HEADER -->
+    <!-- ================================================= -->
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <span class="dashboard-label">
+                ADMINISTRATION
+            </span>
+
+            <h1>
+                Admin Dashboard
+            </h1>
+
+            <p>
+                Overview of the USP Fitness Centre booking system.
+            </p>
+
+        </div>
+
+
+        <a th:href="@{/}"
+           class="btn btn-outline-primary">
+
+            View Main Website
+
+        </a>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- STATISTICS CARDS -->
+    <!-- ================================================= -->
+
+    <div class="row g-4">
+
+
+        <!-- TOTAL MEMBERS -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <a th:href="@{/members}"
+               class="dashboard-card-link">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-card-top">
+
+                        <div class="dashboard-icon">
+                            👥
+                        </div>
+
+                        <span class="dashboard-card-label">
+                            MEMBERS
+                        </span>
+
+                    </div>
+
+
+                    <h2 th:text="${totalMembers}">
+                        0
+                    </h2>
+
+                    <p>
+                        Registered students and community members
+                    </p>
+
+                    <span class="dashboard-card-action">
+                        Manage Members →
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+
+        <!-- TOTAL TRAINERS -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <a th:href="@{/trainers}"
+               class="dashboard-card-link">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-card-top">
+
+                        <div class="dashboard-icon">
+                            🏋
+                        </div>
+
+                        <span class="dashboard-card-label">
+                            TRAINERS
+                        </span>
+
+                    </div>
+
+
+                    <h2 th:text="${totalTrainers}">
+                        0
+                    </h2>
+
+                    <p>
+                        Trainers currently registered
+                    </p>
+
+                    <span class="dashboard-card-action">
+                        Manage Trainers →
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+
+        <!-- FACILITIES -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <a th:href="@{/admin/facilities}"
+               class="dashboard-card-link">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-card-top">
+
+                        <div class="dashboard-icon">
+                            🏟
+                        </div>
+
+                        <span class="dashboard-card-label">
+                            FACILITIES
+                        </span>
+
+                    </div>
+
+
+                    <h2 th:text="${totalFacilities}">
+                        0
+                    </h2>
+
+                    <p>
+                        Sports and recreation facilities
+                    </p>
+
+                    <span class="dashboard-card-action">
+                        Manage Facilities →
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+
+        <!-- FITNESS CLASSES -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <a th:href="@{/fitness-classes}"
+               class="dashboard-card-link">
+
+                <div class="dashboard-card">
+
+                    <div class="dashboard-card-top">
+
+                        <div class="dashboard-icon">
+                            📅
+                        </div>
+
+                        <span class="dashboard-card-label">
+                            FITNESS CLASSES
+                        </span>
+
+                    </div>
+
+
+                    <h2 th:text="${totalFitnessClasses}">
+                        0
+                    </h2>
+
+                    <p>
+                        Fitness classes in the system
+                    </p>
+
+                    <span class="dashboard-card-action">
+                        Manage Classes →
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+
+        <!-- STUDENT APPROVALS -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <a th:href="@{/admin/student-approvals}"
+               class="dashboard-card-link">
+
+                <div class="dashboard-card attention-card">
+
+                    <div class="dashboard-card-top">
+
+                        <div class="dashboard-icon">
+                            🎓
+                        </div>
+
+                        <span class="dashboard-card-label">
+                            STUDENT APPROVALS
+                        </span>
+
+                    </div>
+
+
+                    <h2 th:text="${pendingStudents}">
+                        0
+                    </h2>
+
+                    <p>
+                        Student accounts waiting for verification
+                    </p>
+
+                    <span class="dashboard-card-action">
+                        Review Students →
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+
+        <!-- RENTAL REQUESTS -->
+
+        <div class="col-xl-4 col-md-6">
+
+            <a th:href="@{/admin/rentals}"
+               class="dashboard-card-link">
+
+                <div class="dashboard-card attention-card">
+
+                    <div class="dashboard-card-top">
+
+                        <div class="dashboard-icon">
+                            📋
+                        </div>
+
+                        <span class="dashboard-card-label">
+                            RENTAL REQUESTS
+                        </span>
+
+                    </div>
+
+
+                    <h2 th:text="${pendingRentals}">
+                        0
+                    </h2>
+
+                    <p>
+                        Facility rental requests awaiting action
+                    </p>
+
+                    <span class="dashboard-card-action">
+                        Review Requests →
+                    </span>
+
+                </div>
+
+            </a>
+
+        </div>
+
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- QUICK ACTIONS -->
+    <!-- ================================================= -->
+
+    <div class="quick-actions-section">
+
+
+        <div class="section-title">
+
+            <h3>
+                Quick Actions
+            </h3>
+
+            <p>
+                Frequently used administrator functions.
+            </p>
+
+        </div>
+
+
+        <div class="row g-3">
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <a th:href="@{/members/new}"
+                   class="quick-action">
+
+                    <span>+</span>
+
+                    Add Member
+
+                </a>
+
+            </div>
+
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <a th:href="@{/trainers/new}"
+                   class="quick-action">
+
+                    <span>+</span>
+
+                    Add Trainer
+
+                </a>
+
+            </div>
+
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <a th:href="@{/admin/facilities/new}"
+                   class="quick-action">
+
+                    <span>+</span>
+
+                    Add Facility
+
+                </a>
+
+            </div>
+
+
+
+            <div class="col-lg-3 col-md-6">
+
+                <a th:href="@{/fitness-classes/new}"
+                   class="quick-action">
+
+                    <span>+</span>
+
+                    Add Fitness Class
+
+                </a>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+
+    <!-- ================================================= -->
+    <!-- MANAGEMENT SECTION -->
+    <!-- ================================================= -->
+
+    <div class="management-section">
+
+
+        <div class="section-title">
+
+            <h3>
+                System Management
+            </h3>
+
+            <p>
+                Access the main administration modules.
+            </p>
+
+        </div>
+
+
+
+        <div class="management-grid">
+
+
+            <!-- MEMBER MANAGEMENT -->
+
+            <a th:href="@{/members}"
+               class="management-item">
+
+                <div class="management-icon">
+                    👥
+                </div>
+
+                <div>
+
+                    <strong>
+                        Member Management
+                    </strong>
+
+                    <p>
+                        View, add, edit and manage registered users.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- TRAINERS -->
+
+            <a th:href="@{/trainers}"
+               class="management-item">
+
+                <div class="management-icon">
+                    🏋
+                </div>
+
+                <div>
+
+                    <strong>
+                        Trainer Management
+                    </strong>
+
+                    <p>
+                        Manage instructors and trainer accounts.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- FITNESS CLASSES -->
+
+            <a th:href="@{/fitness-classes}"
+               class="management-item">
+
+                <div class="management-icon">
+                    📅
+                </div>
+
+                <div>
+
+                    <strong>
+                        Fitness Classes
+                    </strong>
+
+                    <p>
+                        Create and manage scheduled fitness classes.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- FACILITIES -->
+
+            <a th:href="@{/admin/facilities}"
+               class="management-item">
+
+                <div class="management-icon">
+                    🏟
+                </div>
+
+                <div>
+
+                    <strong>
+                        Sports Facilities
+                    </strong>
+
+                    <p>
+                        Configure sports and recreation facilities.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- STUDENT VERIFICATION -->
+
+            <a th:href="@{/admin/student-approvals}"
+               class="management-item">
+
+                <div class="management-icon">
+                    ✓
+                </div>
+
+                <div>
+
+                    <strong>
+                        Student Verification
+                    </strong>
+
+                    <p>
+                        Review newly registered USP student accounts.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+
+            <!-- RENTALS -->
+
+            <a th:href="@{/admin/rentals}"
+               class="management-item">
+
+                <div class="management-icon">
+                    📋
+                </div>
+
+                <div>
+
+                    <strong>
+                        Facility Rentals
+                    </strong>
+
+                    <p>
+                        Review and manage facility rental requests.
+                    </p>
+
+                </div>
+
+            </a>
+
+
+        </div>
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ================================================= -->
+<!-- JAVASCRIPT -->
+<!-- ================================================= -->
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+<script src="/js/admin-dashboard.js"></script>
+
+</body>
+
+</html>
