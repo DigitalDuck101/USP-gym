@@ -15,7 +15,6 @@ import com.fitnesusp.usp_gym.service.MemberService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 @RequestMapping("/members")
@@ -104,60 +103,6 @@ public class MemberController {
         member.setPhone(formMember.getPhone());
 
         memberService.saveMember(member);
-
-        return "redirect:/members";
-    }
-    // ==========================================
-// SUSPEND / REINSTATE MEMBER ACCOUNT
-// ==========================================
-
-    @PostMapping("/toggle-account/{id}")
-    public String toggleMemberAccount(
-            @PathVariable Long id,
-            RedirectAttributes redirectAttributes) {
-
-        Member member =
-                memberService.getMemberById(id);
-
-
-        if (member.getAppUser() == null) {
-
-            redirectAttributes.addFlashAttribute(
-                    "errorMessage",
-                    "This member does not have a login account."
-            );
-
-            return "redirect:/members";
-        }
-
-
-        boolean currentlyEnabled =
-                member.getAppUser().isEnabled();
-
-
-        member.getAppUser().setEnabled(
-                !currentlyEnabled
-        );
-
-
-        memberService.saveMember(member);
-
-
-        if (currentlyEnabled) {
-
-            redirectAttributes.addFlashAttribute(
-                    "successMessage",
-                    "Member account suspended successfully."
-            );
-
-        } else {
-
-            redirectAttributes.addFlashAttribute(
-                    "successMessage",
-                    "Member account reinstated successfully."
-            );
-        }
-
 
         return "redirect:/members";
     }

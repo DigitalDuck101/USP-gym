@@ -86,13 +86,11 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                                 <option th:each="facility : ${facilities}"
                                         th:value="${facility.id}"
-                                        th:selected="${selectedFacilityId != null
-                      and selectedFacilityId == facility.id}"
                                         th:text="${facility.name
-                  + ' - '
-                  + facility.type
-                  + ' - '
-                  + facility.location}">
+                                                  + ' - '
+                                                  + facility.type
+                                                  + ' - '
+                                                  + facility.location}">
                                 </option>
 
 
@@ -123,14 +121,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
                                 <input type="datetime-local"
-                                       id="startDateTime"
                                        name="startDateTime"
+                                       id="startDateTime"
                                        class="form-control"
                                        required>
-
-                                <div class="form-text">
-                                    Select the date and time you want your booking to begin.
-                                </div>
 
                             </div>
 
@@ -144,15 +138,10 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 
                                 <input type="datetime-local"
-                                       id="endDateTime"
                                        name="endDateTime"
+                                       id="endDateTime"
                                        class="form-control"
-                                       required
-                                       readonly>
-
-                                <div class="form-text">
-                                    Standard bookings are automatically set to 1 hour.
-                                </div>
+                                       required>
 
                             </div>
 
@@ -241,9 +230,61 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
 <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
 </script>
-<script th:src="@{/js/rental-request.js}">
-</script>
+<script>
 
+    function getLocalDateTime() {
+
+        const now = new Date();
+
+        const year = now.getFullYear();
+
+        const month =  String(now.getMonth() + 1).padStart(2, '0');
+
+        const day = String(now.getDate()).padStart(2, '0');
+
+        const hours = String(now.getHours()).padStart(2, '0');
+
+        const minutes = String(now.getMinutes()).padStart(2, '0');
+
+
+        return year
+                + "-"
+                + month
+                + "-"
+                + day
+                + "T"
+                + hours
+                + ":"
+                + minutes;
+    }
+
+
+    const startInput = document.getElementById( "startDateTime");
+
+    const endInput = document.getElementById("endDateTime");
+
+
+    const now = getLocalDateTime();
+
+
+    // User cannot select the past
+    startInput.min = now;
+    endInput.min = now;
+
+
+    // End cannot be earlier than Start
+    startInput.addEventListener("change", function () {
+
+                endInput.min = startInput.value;
+
+                if (endInput.value && endInput.value  <= startInput.value) {
+
+                    endInput.value = "";
+                }
+            }
+    );
+
+</script>
 
 </body>
 </html>
