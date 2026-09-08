@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
 
 <head>
@@ -11,551 +10,538 @@
 
     <title>Create Account - USP Fitness Centre</title>
 
+
+    <!-- Bootstrap -->
     <link rel="stylesheet"
           th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
 
+
+    <!-- Main CSS -->
     <link rel="stylesheet"
-          th:href="@{/css/auth.css}">
+          th:href="@{/css/app.css}">
+
+
+    <!-- Registration CSS -->
+    <link rel="stylesheet"
+          th:href="@{/css/register.css}">
 
 </head>
 
 
-<body>
+<body class="bg-light">
 
 
-<!-- ================================================= -->
-<!-- NAVBAR -->
-<!-- ================================================= -->
+<div class="container py-5">
 
-<nav class="navbar navbar-dark auth-navbar">
+    <div class="row justify-content-center">
 
-    <div class="container">
+        <div class="col-lg-7 col-md-9">
 
-        <a class="navbar-brand fw-bold"
-           th:href="@{/}">
+            <div class="card shadow-sm border-0">
 
-            USP Fitness Centre
+                <div class="card-body p-4 p-md-5">
 
-        </a>
 
+                    <!-- =================================================
+                         TITLE
+                         ================================================= -->
 
-        <a th:href="@{/}"
-           class="btn btn-outline-light">
+                    <h1 class="fw-bold mb-2">
+                        Create Account
+                    </h1>
 
-            Home
+                    <p class="text-muted mb-4">
+                        Enter your information below.
+                    </p>
 
-        </a>
 
-    </div>
 
-</nav>
+                    <!-- =================================================
+                         ERROR MESSAGE
+                         ================================================= -->
 
-
-
-<!-- ================================================= -->
-<!-- REGISTRATION -->
-<!-- ================================================= -->
-
-<main class="auth-main register-main">
-
-    <div class="container">
-
-        <div class="row justify-content-center">
-
-            <div class="col-xl-11">
-
-
-                <div class="auth-wrapper register-wrapper">
-
-
-                    <!-- ============================================= -->
-                    <!-- LEFT PANEL -->
-                    <!-- ============================================= -->
-
-                    <div class="auth-info">
-
-
-                        <span class="auth-label">
-
-                            JOIN USP FITNESS & RECREATION
-
-                        </span>
-
-
-                        <h1>
-
-                            Create your account.
-
-                        </h1>
-
-
-                        <p>
-
-                            Register to access fitness classes,
-                            facility availability and online booking
-                            services.
-
-                        </p>
-
-
-
-                        <div class="auth-benefits">
-
-
-                            <div class="auth-benefit">
-
-                                <span>✓</span>
-
-                                <div>
-
-                                    <strong>
-                                        Online facility access
-                                    </strong>
-
-                                    <p>
-                                        Browse facilities and request available times.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-
-
-                            <div class="auth-benefit">
-
-                                <span>✓</span>
-
-                                <div>
-
-                                    <strong>
-                                        Fitness class booking
-                                    </strong>
-
-                                    <p>
-                                        Find upcoming sessions and reserve a place.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-
-
-                            <div class="auth-benefit">
-
-                                <span>✓</span>
-
-                                <div>
-
-                                    <strong>
-                                        Personal booking history
-                                    </strong>
-
-                                    <p>
-                                        Keep track of your bookings and rental requests.
-                                    </p>
-
-                                </div>
-
-                            </div>
-
-
-                        </div>
-
-
-                        <div class="registration-note">
-
-                            <strong>
-                                USP Students
-                            </strong>
-
-                            <p>
-
-                                Student accounts require administrator
-                                verification before login is enabled.
-
-                            </p>
-
-                        </div>
-
-
+                    <div th:if="${errorMessage}"
+                         class="alert alert-danger"
+                         th:text="${errorMessage}">
                     </div>
 
 
 
-                    <!-- ============================================= -->
-                    <!-- FORM PANEL -->
-                    <!-- ============================================= -->
+                    <!-- =================================================
+                         REGISTRATION FORM
+                         ================================================= -->
 
-                    <div class="auth-form-panel register-form-panel">
+                    <form th:action="@{/register}"
+                          th:object="${member}"
+                          method="post">
 
 
-                        <div class="auth-form-header">
 
-                            <h2>
-                                Create Account
-                            </h2>
+                        <!-- =================================================
+                             ACCOUNT TYPE
+                             ================================================= -->
 
-                            <p>
-                                Enter your information below.
-                            </p>
+                        <div class="mb-4">
+
+                            <label for="memberType"
+                                   class="form-label fw-semibold">
+
+                                Account Type
+
+                            </label>
+
+
+                            <select th:field="*{memberType}"
+                                    id="memberType"
+                                    class="form-select form-select-lg"
+                                    required>
+
+                                <option value="">
+                                    Select Account Type
+                                </option>
+
+                                <option value="STUDENT">
+                                    USP Student
+                                </option>
+
+                                <option value="RENTER">
+                                    Community Member
+                                </option>
+
+                            </select>
+
+
+                            <div class="form-text">
+
+                                Select the type of account that applies to you.
+
+                            </div>
 
                         </div>
 
 
 
-                        <!-- SERVER ERROR -->
+                        <!-- =================================================
+                             STUDENT ID
+                             ================================================= -->
 
-                        <div th:if="${errorMessage}"
-                             class="alert alert-danger">
+                        <div id="studentSection"
+                             class="mb-4">
 
-                            <span th:text="${errorMessage}">
-                            </span>
+                            <label for="studentId"
+                                   class="form-label fw-semibold">
+
+                                Student ID / Username
+
+                            </label>
+
+
+                            <input type="text"
+                                   th:field="*{studentId}"
+                                   id="studentId"
+                                   class="form-control form-control-lg"
+                                   placeholder="Example: S11231214"
+                                   maxlength="9">
+
+
+                            <div class="form-text">
+
+                                Your Student ID will be used to login.
+
+                            </div>
 
                         </div>
 
 
 
-                        <!-- JAVASCRIPT ERROR -->
+                        <!-- =================================================
+                             PERSONAL INFORMATION
+                             ================================================= -->
 
-                        <div id="clientError"
-                             class="alert alert-danger d-none">
+                        <h5 class="fw-bold mt-4">
 
-                        </div>
+                            Personal Information
 
+                        </h5>
 
-
-                        <form th:action="@{/register}"
-                              th:object="${member}"
-                              method="post"
-                              id="registrationForm">
-
-                            <input type="hidden"
-                                   id="username"
-                                   name="username">
+                        <hr class="mb-4">
 
 
-                            <!-- ================================= -->
-                            <!-- ACCOUNT TYPE -->
-                            <!-- ================================= -->
 
-                            <div class="mb-4">
+                        <div class="row">
 
-                                <label for="memberType"
-                                       class="form-label">
-                                    Account Type
+
+                            <!-- FIRST NAME -->
+
+                            <div class="col-md-6 mb-3">
+
+                                <label class="form-label fw-semibold">
+
+                                    First Name
+
                                 </label>
 
-                                <select th:field="*{memberType}"
-                                        id="memberType"
-                                        class="form-select form-select-lg"
-                                        onchange="toggleStudentIdField()"
-                                        required>
 
-                                    <option value="">
-                                        Select account type
-                                    </option>
-
-                                    <option value="STUDENT">
-                                        USP Student
-                                    </option>
-
-                                    <option value="RENTER">
-                                        Community Member
-                                    </option>
-
-                                </select>
-
-                                <div class="form-text">
-                                    Select the type of account that applies to you.
-                                </div>
+                                <input type="text"
+                                       th:field="*{firstName}"
+                                       class="form-control form-control-lg"
+                                       placeholder="First name"
+                                       required>
 
                             </div>
 
 
 
+                            <!-- LAST NAME -->
 
-                            <!-- ================================= -->
-                            <!-- STUDENT ID -->
-                            <!-- ================================= -->
+                            <div class="col-md-6 mb-3">
 
-                            <div class="mb-4"
-                                 id="studentIdSection"
+                                <label class="form-label fw-semibold">
+
+                                    Last Name
+
+                                </label>
+
+
+                                <input type="text"
+                                       th:field="*{lastName}"
+                                       class="form-control form-control-lg"
+                                       placeholder="Last name"
+                                       required>
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             EMAIL
+                             ================================================= -->
+
+                        <div class="mb-3">
+
+                            <label for="email"
+                                   class="form-label fw-semibold">
+
+                                Email Address
+
+                            </label>
+
+
+                            <input type="email"
+                                   th:field="*{email}"
+                                   id="email"
+                                   class="form-control form-control-lg"
+                                   placeholder="example@email.com"
+                                   required>
+
+
+                            <div id="studentEmailHelp"
+                                 class="form-text"
                                  style="display: none;">
 
-                                <label for="studentId"
-                                       class="form-label">
-                                    Student ID / Username
-                                </label>
+                                Your USP student email is generated automatically
+                                from your Student ID.
 
-                                <input type="text"
-                                       th:field="*{studentId}"
-                                       id="studentId"
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             PHONE
+                             ================================================= -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label fw-semibold">
+
+                                Phone Number
+
+                            </label>
+
+
+                            <input type="text"
+                                   th:field="*{phone}"
+                                   class="form-control form-control-lg"
+                                   placeholder="Example: 9123456">
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             PASSWORD
+                             ================================================= -->
+
+                        <div class="mb-3">
+
+                            <label for="password"
+                                   class="form-label fw-semibold">
+
+                                Password
+
+                            </label>
+
+
+                            <div class="input-group">
+
+                                <input type="password"
+                                       id="password"
+                                       name="password"
                                        class="form-control form-control-lg"
-                                       placeholder="Example: S11231214">
-
-                                <div class="form-text">
-                                    Your Student ID will be used to login.
-                                </div>
-
-                            </div>
-
-
-
-                            <!-- ================================= -->
-                            <!-- PERSONAL INFORMATION -->
-                            <!-- ================================= -->
-
-                            <div class="form-section-title">
-
-                                Personal Information
-
-                            </div>
-
-
-                            <div class="row">
-
-
-                                <div class="col-md-6 mb-3">
-
-                                    <label for="firstName"
-                                           class="form-label">
-
-                                        First Name
-
-                                    </label>
-
-
-                                    <input type="text"
-                                           th:field="*{firstName}"
-                                           id="firstName"
-                                           class="form-control form-control-lg"
-                                           placeholder="First name"
-                                           required>
-
-                                </div>
-
-
-
-                                <div class="col-md-6 mb-3">
-
-                                    <label for="lastName"
-                                           class="form-label">
-
-                                        Last Name
-
-                                    </label>
-
-
-                                    <input type="text"
-                                           th:field="*{lastName}"
-                                           id="lastName"
-                                           class="form-control form-control-lg"
-                                           placeholder="Last name"
-                                           required>
-
-                                </div>
-
-                            </div>
-
-
-
-                            <div class="mb-3">
-
-                                <label for="email"
-                                       class="form-label">
-
-                                    Email Address
-
-                                </label>
-
-
-                                <input type="email"
-                                       th:field="*{email}"
-                                       id="email"
-                                       class="form-control form-control-lg"
-                                       placeholder="example@email.com"
-                                       required>
-
-                            </div>
-
-
-
-                            <div class="mb-4">
-
-                                <label for="phone"
-                                       class="form-label">
-
-                                    Phone Number
-
-                                </label>
-
-
-                                <input type="text"
-                                       th:field="*{phone}"
-                                       id="phone"
-                                       class="form-control form-control-lg"
-                                       placeholder="Example: 9123456">
-
-                            </div>
-
-
-
-                            <!-- ================================= -->
-                            <!-- LOGIN INFORMATION -->
-                            <!-- ================================= -->
-
-
-                            <!-- PASSWORD -->
-
-                            <div class="mb-3">
-
-                                <label for="password"
-                                       class="form-label">
-
-                                    Password
-
-                                </label>
-
-
-                                <div class="password-wrapper">
-
-
-                                    <input type="password"
-                                           id="password"
-                                           name="password"
-                                           class="form-control form-control-lg"
-                                           placeholder="Create a password"
-                                           autocomplete="new-password"
-                                           minlength="8"
-                                           required>
-
-
-                                    <button type="button"
-                                            id="togglePassword"
-                                            class="password-toggle">
-
-                                        Show
-
-                                    </button>
-
-
-                                </div>
-
-
-                                <div class="form-text">
-
-                                    Use at least 8 characters.
-
-                                </div>
-
-                            </div>
-
-
-
-                            <!-- CONFIRM PASSWORD -->
-
-                            <div class="mb-4">
-
-                                <label for="confirmPassword"
-                                       class="form-label">
-
-                                    Confirm Password
-
-                                </label>
-
-
-                                <div class="password-wrapper">
-
-
-                                    <input type="password"
-                                           id="confirmPassword"
-                                           class="form-control form-control-lg"
-                                           placeholder="Enter the password again"
-                                           autocomplete="new-password"
-                                           required>
-
-
-                                    <button type="button"
-                                            id="toggleConfirmPassword"
-                                            class="password-toggle">
-
-                                        Show
-
-                                    </button>
-
-
-                                </div>
-
-                            </div>
-
-
-
-                            <!-- TERMS -->
-
-                            <div class="form-check mb-4">
-
-                                <input class="form-check-input"
-                                       type="checkbox"
-                                       id="terms"
+                                       placeholder="Create a password"
+                                       minlength="8"
                                        required>
 
 
-                                <label class="form-check-label"
-                                       for="terms">
+                                <button type="button"
+                                        class="btn btn-outline-secondary"
+                                        onclick="togglePassword(
+                                            'password',
+                                            this
+                                        )">
 
-                                    I confirm that the information provided is correct.
+                                    Show
 
-                                </label>
+                                </button>
 
                             </div>
 
 
+                            <div class="form-text">
 
-                            <!-- SUBMIT -->
+                                Use at least 8 characters.
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             CONFIRM PASSWORD
+                             ================================================= -->
+
+                        <div class="mb-4">
+
+                            <label for="confirmPassword"
+                                   class="form-label fw-semibold">
+
+                                Confirm Password
+
+                            </label>
+
+
+                            <div class="input-group">
+
+                                <input type="password"
+                                       id="confirmPassword"
+                                       name="confirmPassword"
+                                       class="form-control form-control-lg"
+                                       placeholder="Enter the password again"
+                                       minlength="8"
+                                       required>
+
+
+                                <button type="button"
+                                        class="btn btn-outline-secondary"
+                                        onclick="togglePassword(
+                                            'confirmPassword',
+                                            this
+                                        )">
+
+                                    Show
+
+                                </button>
+
+                            </div>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             CONFIRM INFORMATION
+                             ================================================= -->
+
+                        <div class="form-check mb-4">
+
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   id="confirmation"
+                                   required>
+
+
+                            <label class="form-check-label"
+                                   for="confirmation">
+
+                                I confirm that the information provided is correct.
+
+                            </label>
+
+                        </div>
+
+
+
+                        <!-- =================================================
+                             CREATE ACCOUNT BUTTON
+                             ================================================= -->
+
+                        <div class="d-grid">
 
                             <button type="submit"
-                                    class="btn btn-primary btn-lg w-100 login-button">
+                                    class="btn btn-primary btn-lg">
 
                                 Create Account
 
                             </button>
 
-
-                        </form>
-
+                        </div>
 
 
-                        <div class="auth-divider">
 
-                            <span>
-                                Already registered?
-                            </span>
+                        <!-- =================================================
+                             SOCIAL LOGIN
+                             COMMUNITY MEMBER ONLY
+                             ================================================= -->
+
+                        <div id="socialLoginSection"
+                             class="social-login-section"
+                             style="display: none;">
+
+
+                            <div class="social-divider">
+
+                                <span>
+                                    or continue with
+                                </span>
+
+                            </div>
+
+
+
+                            <div class="social-login-buttons">
+
+
+                                <!-- GOOGLE -->
+
+                                <button type="button"
+                                        class="social-login-btn"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Continue with Google"
+                                        aria-label="Continue with Google">
+
+
+                                    <svg viewBox="0 0 24 24"
+                                         class="social-icon"
+                                         aria-hidden="true">
+
+
+                                        <path fill="#4285F4"
+                                              d="M21.6 12.23c0-.71-.06-1.4-.18-2.06H12v3.9h5.38a4.6 4.6 0 0 1-2 3.02v2.52h3.24c1.9-1.75 2.98-4.33 2.98-7.38z"/>
+
+
+                                        <path fill="#34A853"
+                                              d="M12 22c2.7 0 4.98-.9 6.64-2.4l-3.24-2.52c-.9.6-2.05.96-3.4.96-2.6 0-4.8-1.76-5.6-4.12H3.06v2.6A10 10 0 0 0 12 22z"/>
+
+
+                                        <path fill="#FBBC05"
+                                              d="M6.4 13.92A6 6 0 0 1 6.08 12c0-.67.12-1.32.32-1.92v-2.6H3.06A10 10 0 0 0 2 12c0 1.61.38 3.13 1.06 4.52l3.34-2.6z"/>
+
+
+                                        <path fill="#EA4335"
+                                              d="M12 5.96c1.47 0 2.78.5 3.82 1.5l2.86-2.87C16.97 2.99 14.7 2 12 2a10 10 0 0 0-8.94 5.48l3.34 2.6c.8-2.36 3-4.12 5.6-4.12z"/>
+
+
+                                    </svg>
+
+                                </button>
+
+
+
+                                <!-- FACEBOOK -->
+
+                                <button type="button"
+                                        class="social-login-btn"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Continue with Facebook"
+                                        aria-label="Continue with Facebook">
+
+
+                                    <svg viewBox="0 0 24 24"
+                                         class="social-icon"
+                                         aria-hidden="true">
+
+
+                                        <circle cx="12"
+                                                cy="12"
+                                                r="10"
+                                                fill="#1877F2"/>
+
+
+                                        <path fill="#ffffff"
+                                              d="M13.4 8.2h1.9V5.3c-.33-.05-1.46-.14-2.8-.14-2.77 0-4.67 1.7-4.67 4.8v2.68H4.7v3.25h3.13V24h3.84v-8.11h3.2l.51-3.25h-3.71V10.3c0-.94.25-1.58 1.73-1.58z"
+                                              transform="scale(.72) translate(4 2)"/>
+
+
+                                    </svg>
+
+                                </button>
+
+
+
+                                <!-- APPLE -->
+
+                                <button type="button"
+                                        class="social-login-btn"
+                                        data-bs-toggle="tooltip"
+                                        data-bs-placement="top"
+                                        data-bs-title="Continue with Apple"
+                                        aria-label="Continue with Apple">
+
+
+                                    <svg viewBox="0 0 24 24"
+                                         class="social-icon apple-icon"
+                                         aria-hidden="true">
+
+
+                                        <path fill="currentColor"
+                                              d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.37-.07 2.33.75 3.13.79 1.19-.24 2.33-.93 3.6-.84 1.52.12 2.67.72 3.43 1.8-3.14 1.88-2.39 6.02.48 7.17-.57 1.5-1.31 2.99-2.64 4.05zM12.03 7.25C11.88 5.02 13.69 3.18 15.77 3c.29 2.58-2.34 4.5-3.74 4.25z"/>
+
+
+                                    </svg>
+
+                                </button>
+
+
+                            </div>
 
                         </div>
 
 
-                        <a th:href="@{/login}"
-                           class="btn btn-outline-primary btn-lg w-100">
 
-                            Login to Existing Account
+                        <!-- =================================================
+                             LOGIN LINK
+                             ================================================= -->
 
-                        </a>
+                        <div class="text-center mt-4">
 
+                            Already have an account?
 
-                        <div class="back-home">
-
-                            <a th:href="@{/}">
-
-                                ← Back to Home
-
+                            <a th:href="@{/login}">
+                                Login
                             </a>
 
                         </div>
 
 
-                    </div>
+                    </form>
 
 
                 </div>
@@ -566,71 +552,326 @@
 
     </div>
 
-</main>
+</div>
 
 
 
-<footer class="auth-footer">
-
-    <div class="container text-center">
-
-        <p>
-
-            © <span id="currentYear"></span>
-            University of the South Pacific Fitness Centre
-
-        </p>
-
-    </div>
-
-</footer>
-
-
+<!-- =====================================================
+     BOOTSTRAP JAVASCRIPT
+     ===================================================== -->
 
 <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
 </script>
 
 
-<script th:src="@{/js/auth.js}">
-</script>
+
+<!-- =====================================================
+     REGISTRATION JAVASCRIPT
+     ===================================================== -->
 
 <script>
-    function toggleStudentIdField() {
-
-        const memberType =
-            document.getElementById("memberType");
-
-        const studentSection =
-            document.getElementById("studentIdSection");
-
-        const studentId =
-            document.getElementById("studentId");
-
-
-        if (memberType.value === "STUDENT") {
-
-            studentSection.style.display = "block";
-            studentId.required = true;
-
-        } else {
-
-            studentSection.style.display = "none";
-            studentId.required = false;
-            studentId.value = "";
-
-        }
-    }
-
 
     document.addEventListener(
         "DOMContentLoaded",
         function () {
 
-            toggleStudentIdField();
+
+            const memberType =
+                document.getElementById("memberType");
+
+
+            const studentSection =
+                document.getElementById("studentSection");
+
+
+            const studentId =
+                document.getElementById("studentId");
+
+
+            const email =
+                document.getElementById("email");
+
+
+            const studentEmailHelp =
+                document.getElementById("studentEmailHelp");
+
+
+            const socialLoginSection =
+                document.getElementById("socialLoginSection");
+
+
+
+            /* ============================================
+               ACCOUNT TYPE CHANGE
+               ============================================ */
+
+            function updateAccountType() {
+
+                const type =
+                    memberType.value;
+
+
+
+                /* ========================================
+                   USP STUDENT
+                   ======================================== */
+
+                if (type === "STUDENT") {
+
+
+                    studentSection.style.display =
+                        "block";
+
+
+                    studentId.required =
+                        true;
+
+
+                    email.readOnly =
+                        true;
+
+
+                    email.placeholder =
+                        "Student email generated automatically";
+
+
+                    studentEmailHelp.style.display =
+                        "block";
+
+
+                    /*
+                     * Students do not use
+                     * Google / Facebook / Apple login
+                     */
+                    socialLoginSection.style.display =
+                        "none";
+
+
+                    updateStudentEmail();
+
+                }
+
+
+
+                /* ========================================
+                   COMMUNITY MEMBER
+                   ======================================== */
+
+                else if (type === "RENTER") {
+
+
+                    studentSection.style.display =
+                        "none";
+
+
+                    studentId.required =
+                        false;
+
+
+                    studentId.value =
+                        "";
+
+
+                    email.readOnly =
+                        false;
+
+
+                    email.value =
+                        "";
+
+
+                    email.placeholder =
+                        "example@email.com";
+
+
+                    studentEmailHelp.style.display =
+                        "none";
+
+
+                    /*
+                     * Community members can see
+                     * social login options
+                     */
+                    socialLoginSection.style.display =
+                        "block";
+
+                }
+
+
+
+                /* ========================================
+                   NO ACCOUNT TYPE SELECTED
+                   ======================================== */
+
+                else {
+
+
+                    studentSection.style.display =
+                        "none";
+
+
+                    studentId.required =
+                        false;
+
+
+                    email.readOnly =
+                        false;
+
+
+                    studentEmailHelp.style.display =
+                        "none";
+
+
+                    socialLoginSection.style.display =
+                        "none";
+
+                }
+
+            }
+
+
+
+            /* ============================================
+               GENERATE USP STUDENT EMAIL
+               ============================================ */
+
+            function updateStudentEmail() {
+
+
+                if (memberType.value !== "STUDENT") {
+
+                    return;
+
+                }
+
+
+                let value =
+                    studentId.value
+                        .trim()
+                        .toUpperCase();
+
+
+                studentId.value =
+                    value;
+
+
+                if (value.length > 0) {
+
+
+                    email.value =
+                        value
+                        + "@student.usp.ac.fj";
+
+
+                } else {
+
+
+                    email.value =
+                        "";
+
+                }
+
+            }
+
+
+
+            /* ============================================
+               ACCOUNT TYPE EVENT
+               ============================================ */
+
+            memberType.addEventListener(
+                "change",
+                updateAccountType
+            );
+
+
+
+            /* ============================================
+               STUDENT ID EVENT
+               ============================================ */
+
+            studentId.addEventListener(
+                "input",
+                updateStudentEmail
+            );
+
+
+
+            /* ============================================
+               BOOTSTRAP TOOLTIPS
+               ============================================ */
+
+            const tooltipElements =
+                document.querySelectorAll(
+                    '[data-bs-toggle="tooltip"]'
+                );
+
+
+            tooltipElements.forEach(
+                function (element) {
+
+                    new bootstrap.Tooltip(
+                        element
+                    );
+
+                }
+            );
+
+
+
+            /* ============================================
+               INITIAL PAGE STATE
+               ============================================ */
+
+            updateAccountType();
 
         }
     );
+
+
+
+    /* =================================================
+       SHOW / HIDE PASSWORD
+       ================================================= */
+
+    function togglePassword(
+        inputId,
+        button
+    ) {
+
+
+        const input =
+            document.getElementById(inputId);
+
+
+        if (input.type === "password") {
+
+
+            input.type =
+                "text";
+
+
+            button.textContent =
+                "Hide";
+
+
+        } else {
+
+
+            input.type =
+                "password";
+
+
+            button.textContent =
+                "Show";
+
+        }
+
+    }
+
 </script>
+
+
 </body>
 
 </html>
