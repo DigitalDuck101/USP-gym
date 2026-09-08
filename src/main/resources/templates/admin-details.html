@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>
+        Administrator Details
+    </title>
+
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+
+<body>
+
+
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
+
+
+
+<div class="container page-container">
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-md-7">
+
+
+            <h1 class="page-title mb-4">
+
+                Administrator Details
+
+            </h1>
+
+
+
+            <div class="card shadow-sm">
+
+
+                <div class="card-body p-4">
+
+
+                    <dl class="row">
+
+
+                        <dt class="col-sm-4">
+                            ID
+                        </dt>
+
+                        <dd class="col-sm-8"
+                            th:text="${adminAccount.id}">
+                        </dd>
+
+
+
+                        <dt class="col-sm-4">
+                            Username
+                        </dt>
+
+                        <dd class="col-sm-8">
+
+                            <span th:text="${adminAccount.username}">
+                            </span>
+
+
+                            <span th:if="${adminAccount.username == currentUsername}"
+                                  class="badge text-bg-primary ms-2">
+
+                                YOU
+
+                            </span>
+
+                        </dd>
+
+
+
+                        <dt class="col-sm-4">
+                            Role
+                        </dt>
+
+                        <dd class="col-sm-8">
+
+                            ADMIN
+
+                        </dd>
+
+
+
+                        <dt class="col-sm-4">
+                            Status
+                        </dt>
+
+                        <dd class="col-sm-8">
+
+
+                            <span th:if="${adminAccount.enabled}"
+                                  class="badge text-bg-success">
+
+                                ENABLED
+
+                            </span>
+
+
+                            <span th:unless="${adminAccount.enabled}"
+                                  class="badge text-bg-secondary">
+
+                                DISABLED
+
+                            </span>
+
+
+                        </dd>
+
+
+                    </dl>
+
+
+
+                    <div class="d-flex gap-2">
+
+
+                        <a th:href="@{/admin/admins/edit/{id}
+                                   (id=${adminAccount.id})}"
+                           class="btn btn-primary">
+
+                            Edit
+
+                        </a>
+
+
+                        <a th:href="@{/admin/admins}"
+                           class="btn btn-outline-secondary">
+
+                            Back
+
+                        </a>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+
+</body>
+
+</html>

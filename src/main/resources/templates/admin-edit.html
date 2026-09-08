@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<!--
+Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
+-->
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>
+        Edit Administrator
+    </title>
+
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
+
+</head>
+
+
+<body>
+
+
+<div th:replace="~{fragments/admin-navbar :: adminNavbar}">
+</div>
+
+
+
+<div class="container page-container">
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-md-7 col-lg-6">
+
+
+            <h1 class="page-title mb-4">
+
+                Edit Administrator
+
+            </h1>
+
+
+
+            <div class="card shadow-sm">
+
+
+                <div class="card-body p-4">
+
+
+                    <form th:action="@{/admin/admins/update/{id}
+                                     (id=${adminAccount.id})}"
+                          method="post">
+
+
+                        <!-- USERNAME -->
+
+                        <div class="mb-3">
+
+
+                            <label class="form-label">
+
+                                Username
+
+                            </label>
+
+
+                            <input type="text"
+                                   name="username"
+                                   class="form-control"
+                                   minlength="3"
+                                   th:value="${adminAccount.username}"
+                                   required>
+
+
+                        </div>
+
+
+
+                        <!-- PASSWORD -->
+
+                        <div class="mb-3">
+
+
+                            <label class="form-label">
+
+                                New Password
+
+                            </label>
+
+
+                            <input type="password"
+                                   name="password"
+                                   class="form-control"
+                                   minlength="6">
+
+
+                            <div class="form-text">
+
+                                Leave blank to keep the current password.
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- ENABLED -->
+
+                        <div class="form-check mb-4">
+
+
+                            <input type="checkbox"
+                                   name="enabled"
+                                   value="true"
+                                   id="enabled"
+                                   class="form-check-input"
+                                   th:checked="${adminAccount.enabled}">
+
+
+                            <label for="enabled"
+                                   class="form-check-label">
+
+                                Account enabled
+
+                            </label>
+
+
+                        </div>
+
+
+
+                        <div class="d-flex gap-2">
+
+
+                            <button type="submit"
+                                    class="btn btn-primary">
+
+                                Save Changes
+
+                            </button>
+
+
+                            <a th:href="@{/admin/admins}"
+                               class="btn btn-outline-secondary">
+
+                                Cancel
+
+                            </a>
+
+
+                        </div>
+
+
+                    </form>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
+
+</body>
+
+</html>

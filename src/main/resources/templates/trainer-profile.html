@@ -3,69 +3,559 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <head>
 
     <meta charset="UTF-8">
-    <title>Trainer Profile</title>
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1">
+
+    <title>
+        Trainer Profile - USP Fitness Club
+    </title>
+
+
+    <!-- Bootstrap -->
+
+    <link rel="stylesheet"
+          th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
+
+
+    <!-- Application CSS -->
+
+    <link rel="stylesheet"
+          th:href="@{/css/app.css}">
 
 </head>
 
+
 <body>
 
-<h1>USP Fitness Club</h1>
 
-<h2>Trainer Profile</h2>
+<!-- ===================================================== -->
+<!-- TRAINER NAVBAR -->
+<!-- ===================================================== -->
 
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-<p>
-    <strong>Staff ID:</strong>
-    <span th:text="${trainer.staffId}"></span>
-</p>
-
-<p>
-    <strong>Name:</strong>
-
-    <span th:text="${trainer.firstName}"></span>
-    <span th:text="${trainer.lastName}"></span>
-</p>
-
-<p>
-    <strong>Email:</strong>
-    <span th:text="${trainer.email}"></span>
-</p>
-
-<p>
-    <strong>Phone:</strong>
-    <span th:text="${trainer.phone}"></span>
-</p>
-
-<p>
-    <strong>Specialization:</strong>
-    <span th:text="${trainer.specialization}"></span>
-</p>
-
-<p>
-    <strong>Username:</strong>
-    <span th:text="${trainer.appUser.username}"></span>
-</p>
+    <div class="container">
 
 
-<form th:action="@{/logout}"
-      method="post">
-    
-    <a th:href="@{/trainer/classes}">
-       My Fitness Classes
-    </a>
+        <!-- BRAND -->
 
-    <br><br>
+        <a class="navbar-brand"
+           th:href="@{/trainer/profile}">
 
-    <button type="submit">
-        Logout
-    </button>
+            USP Fitness Club
 
-</form>
+        </a>
+
+
+
+        <!-- MOBILE BUTTON -->
+
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#trainerNavbar">
+
+            <span class="navbar-toggler-icon">
+            </span>
+
+        </button>
+
+
+
+        <!-- NAVIGATION -->
+
+        <div class="collapse navbar-collapse"
+             id="trainerNavbar">
+
+
+            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+
+                <!-- PROFILE -->
+
+                <li class="nav-item">
+
+                    <a class="nav-link active"
+                       th:href="@{/trainer/profile}">
+
+                        Profile
+
+                    </a>
+
+                </li>
+
+
+
+                <!-- MY CLASSES -->
+
+                <li class="nav-item">
+
+                    <a class="nav-link"
+                       th:href="@{/trainer/classes}">
+
+                        My Classes
+
+                    </a>
+
+                </li>
+
+
+            </ul>
+
+            <span class="navbar-text text-light me-3">
+
+               Logged in as:
+
+               <strong sec:authentication="name">
+
+               username
+
+               </strong>
+
+            </span>
+
+            <!-- LOGOUT -->
+
+            <form th:action="@{/logout}"
+                  method="post"
+                  class="d-flex">
+
+
+                <button type="submit"
+                        class="btn btn-outline-light">
+
+                    Logout
+
+                </button>
+
+
+            </form>
+
+
+        </div>
+
+
+    </div>
+
+</nav>
+
+
+
+<!-- ===================================================== -->
+<!-- PAGE CONTENT -->
+<!-- ===================================================== -->
+
+<div class="container page-container">
+
+
+    <div class="row justify-content-center">
+
+
+        <div class="col-lg-8 col-xl-7">
+
+
+            <!-- ========================================= -->
+            <!-- PAGE HEADER -->
+            <!-- ========================================= -->
+
+            <div class="mb-4">
+
+
+                <h1 class="page-title">
+
+                    Trainer Profile
+
+                </h1>
+
+
+                <p class="text-muted mb-0">
+
+                    View your trainer account information
+
+                </p>
+
+
+            </div>
+
+
+
+            <!-- ========================================= -->
+            <!-- PROFILE CARD -->
+            <!-- ========================================= -->
+
+            <div class="card shadow-sm mb-4">
+
+
+                <div class="card-body p-4">
+
+
+                    <!-- PROFILE HEADER -->
+
+                    <div class="d-flex
+                                align-items-center
+                                justify-content-between
+                                flex-wrap
+                                gap-3
+                                mb-4">
+
+
+                        <div>
+
+
+                            <h3 class="mb-1"
+                                th:text="${trainer.firstName
+                                         + ' '
+                                         + trainer.lastName}">
+
+                                Trainer Name
+
+                            </h3>
+
+
+                            <span class="badge text-bg-primary">
+
+                                TRAINER
+
+                            </span>
+
+
+                        </div>
+
+
+
+                        <a th:href="@{/trainer/classes}"
+                           class="btn btn-primary">
+
+                            View My Classes
+
+                        </a>
+
+
+                    </div>
+
+
+
+                    <hr>
+
+
+
+                    <!-- ================================= -->
+                    <!-- PROFILE INFORMATION -->
+                    <!-- ================================= -->
+
+                    <div class="row mt-4">
+
+
+                        <!-- STAFF ID -->
+
+                        <div class="col-md-6 mb-4">
+
+
+                            <div class="text-muted small">
+
+                                Staff ID
+
+                            </div>
+
+
+                            <div class="fw-semibold"
+                                 th:text="${trainer.staffId}">
+
+                                Staff ID
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- SPECIALIZATION -->
+
+                        <div class="col-md-6 mb-4">
+
+
+                            <div class="text-muted small">
+
+                                Specialization
+
+                            </div>
+
+
+                            <div class="fw-semibold">
+
+                                <span th:if="${trainer.specialization != null
+                                             and !trainer.specialization.isEmpty()}"
+                                      th:text="${trainer.specialization}">
+
+                                    Specialization
+
+                                </span>
+
+
+                                <span th:unless="${trainer.specialization != null
+                                                 and !trainer.specialization.isEmpty()}"
+                                      class="text-muted">
+
+                                    —
+
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- FIRST NAME -->
+
+                        <div class="col-md-6 mb-4">
+
+
+                            <div class="text-muted small">
+
+                                First Name
+
+                            </div>
+
+
+                            <div class="fw-semibold"
+                                 th:text="${trainer.firstName}">
+
+                                First Name
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- LAST NAME -->
+
+                        <div class="col-md-6 mb-4">
+
+
+                            <div class="text-muted small">
+
+                                Last Name
+
+                            </div>
+
+
+                            <div class="fw-semibold"
+                                 th:text="${trainer.lastName}">
+
+                                Last Name
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- EMAIL -->
+
+                        <div class="col-md-6 mb-4">
+
+
+                            <div class="text-muted small">
+
+                                Email
+
+                            </div>
+
+
+                            <div class="fw-semibold"
+                                 th:text="${trainer.email}">
+
+                                Email
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- PHONE -->
+
+                        <div class="col-md-6 mb-4">
+
+
+                            <div class="text-muted small">
+
+                                Phone
+
+                            </div>
+
+
+                            <div class="fw-semibold">
+
+
+                                <span th:if="${trainer.phone != null
+                                             and !trainer.phone.isEmpty()}"
+                                      th:text="${trainer.phone}">
+
+                                    Phone
+
+                                </span>
+
+
+                                <span th:unless="${trainer.phone != null
+                                                 and !trainer.phone.isEmpty()}"
+                                      class="text-muted">
+
+                                    —
+
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- USERNAME -->
+
+                        <div class="col-md-6 mb-4">
+
+
+                            <div class="text-muted small">
+
+                                Username
+
+                            </div>
+
+
+                            <div class="fw-semibold"
+                                 th:text="${trainer.appUser.username}">
+
+                                Username
+
+                            </div>
+
+
+                        </div>
+
+
+
+                        <!-- ACCOUNT STATUS -->
+
+                        <div class="col-md-6 mb-4">
+
+
+                            <div class="text-muted small">
+
+                                Account Status
+
+                            </div>
+
+
+                            <div>
+
+
+                                <span th:if="${trainer.appUser.enabled}"
+                                      class="badge text-bg-success">
+
+                                    ACTIVE
+
+                                </span>
+
+
+                                <span th:unless="${trainer.appUser.enabled}"
+                                      class="badge text-bg-secondary">
+
+                                    DISABLED
+
+                                </span>
+
+
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+
+
+                </div>
+
+
+            </div>
+
+
+
+            <!-- ========================================= -->
+            <!-- TRAINER ACTIVITIES -->
+            <!-- ========================================= -->
+
+            <div class="card shadow-sm">
+
+
+                <div class="card-body p-4">
+
+
+                    <h4 class="mb-3">
+
+                        Trainer Activities
+
+                    </h4>
+
+
+                    <p class="text-muted">
+
+                        View fitness classes assigned to you.
+
+                    </p>
+
+
+                    <a th:href="@{/trainer/classes}"
+                       class="btn btn-outline-primary">
+
+                        My Fitness Classes
+
+                    </a>
+
+
+                </div>
+
+
+            </div>
+
+
+        </div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<!-- ===================================================== -->
+<!-- BOOTSTRAP JS -->
+<!-- ===================================================== -->
+
+<script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
+</script>
+
 
 </body>
 
