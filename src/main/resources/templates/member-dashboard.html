@@ -10,157 +10,95 @@
 
     <title>Member Dashboard - USP Fitness Centre</title>
 
-
     <!-- Bootstrap -->
     <link rel="stylesheet"
           th:href="@{/webjars/bootstrap/5.3.8/css/bootstrap.min.css}">
-
 
     <!-- Main CSS -->
     <link rel="stylesheet"
           th:href="@{/css/app.css}">
 
-
     <!-- Member Dashboard CSS -->
     <link rel="stylesheet"
           th:href="@{/css/member-dashboard.css}">
 
-</head>
 
+
+</head>
 
 <body>
 
 
-<!-- =====================================================
-     MEMBER NAVBAR
-     ===================================================== -->
-
+<!-- MEMBER NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
 
     <div class="container">
 
-
-        <!-- BRAND -->
-
         <a class="navbar-brand fw-bold"
            th:href="@{/member/dashboard}">
-
             USP Fitness Centre
-
         </a>
-
-
-        <!-- MOBILE BUTTON -->
 
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
-                data-bs-target="#memberNavbar"
-                aria-controls="memberNavbar"
-                aria-expanded="false"
-                aria-label="Toggle navigation">
+                data-bs-target="#memberNavbar">
 
             <span class="navbar-toggler-icon"></span>
 
         </button>
 
-
-        <!-- NAVIGATION -->
-
         <div class="collapse navbar-collapse"
              id="memberNavbar">
 
-
             <ul class="navbar-nav me-auto">
 
-
-                <!-- DASHBOARD -->
-
                 <li class="nav-item">
-
                     <a class="nav-link active"
                        th:href="@{/member/dashboard}">
-
                         Dashboard
-
                     </a>
-
                 </li>
 
-
-                <!-- PROFILE -->
-
                 <li class="nav-item">
-
                     <a class="nav-link"
                        th:href="@{/profile}">
-
                         My Profile
-
                     </a>
-
                 </li>
 
-
-                <!-- FITNESS CLASSES -->
-
                 <li class="nav-item">
-
                     <a class="nav-link"
                        th:href="@{/member/classes}">
-
                         Fitness Classes
-
                     </a>
-
                 </li>
 
-
-                <!-- BOOKINGS -->
-
                 <li class="nav-item">
-
                     <a class="nav-link"
                        th:href="@{/member/bookings}">
-
                         My Bookings
-
                     </a>
-
                 </li>
-
-
-                <!-- FACILITY RENTALS -->
 
                 <li class="nav-item">
-
                     <a class="nav-link"
                        th:href="@{/renter/rentals}">
-
                         Facility Rentals
-
                     </a>
-
                 </li>
 
-
             </ul>
-
-
-            <!-- LOGOUT -->
 
             <form th:action="@{/logout}"
                   method="post">
 
                 <button class="btn btn-outline-light"
                         type="submit">
-
                     Logout
-
                 </button>
 
             </form>
-
 
         </div>
 
@@ -169,119 +107,78 @@
 </nav>
 
 
-
-<!-- =====================================================
-     MAIN CONTENT
-     ===================================================== -->
-
+<!-- MAIN CONTENT -->
 <div class="container member-dashboard-container">
-
-
-    <!-- =================================================
-         HEADER
-         ================================================= -->
 
     <div class="member-dashboard-header">
 
+        <div>
 
-        <span class="member-dashboard-label">
-
-            MEMBER PORTAL
-
-        </span>
-
-
-        <h1>
-
-            Welcome,
-
-            <span th:text="${member.firstName + ' ' + member.lastName}">
-                Member Name
+            <span class="member-dashboard-label">
+                MEMBER PORTAL
             </span>
 
-        </h1>
+            <h1>
+                Welcome,
+                <span th:text="${member.firstName + ' ' + member.lastName}">
+        Member Name
+    </span>
+            </h1>
 
+            <p>
+                Manage your fitness classes, bookings and facility activities.
+            </p>
 
-        <p>
-
-            Manage your fitness classes, bookings and facility activities.
-
-        </p>
-
+        </div>
 
     </div>
 
 
-
-    <!-- =================================================
-         DASHBOARD CARDS
-         ================================================= -->
-
+    <!-- DASHBOARD CARDS -->
     <div class="row g-4">
-
-
-        <!-- =================================================
-             ACCOUNT STATUS
-             ================================================= -->
 
         <div class="col-lg-4 col-md-6">
 
             <a th:href="@{/profile}"
                class="member-card-link">
 
-                <div class="member-card">
+                <div class="col-lg-4 col-md-6">
 
+                    <div class="member-card">
 
-                    <div class="member-icon">
+                        <div class="member-icon">
+                            ✅
+                        </div>
 
-                        ✅
+                        <h3>
+                            Account Status
+                        </h3>
+
+                        <p>
+                            <strong>Account Type:</strong>
+
+                            <span th:text="${member.memberType}">
+                MEMBER
+            </span>
+
+                            <br>
+
+                            <strong>Email:</strong>
+
+                            <span th:text="${member.email}">
+                email@example.com
+            </span>
+
+                            <br>
+
+                            <strong>Verification:</strong>
+
+                            <span th:text="${member.verificationStatus}">
+                STATUS
+            </span>
+                        </p>
 
                     </div>
-
-
-                    <h3>
-
-                        Account Status
-
-                    </h3>
-
-
-                    <p>
-
-                        <strong>
-                            Account Type:
-                        </strong>
-
-                        <span th:text="${member.memberType}">
-                            MEMBER
-                        </span>
-
-
-                        <br>
-
-
-                        <strong>
-                            Email:
-                        </strong>
-
-                        <span th:text="${member.email}">
-                            email@example.com
-                        </span>
-
-
-                        <br>
-
-
-                        <strong>
-                            Verification:
-                        </strong>
-
-                        <span th:text="${member.verificationStatus}">
-                            STATUS
-                        </span>
-
-                    </p>
-
 
                 </div>
 
@@ -289,11 +186,6 @@
 
         </div>
 
-
-
-        <!-- =================================================
-             FITNESS CLASSES
-             ================================================= -->
 
         <div class="col-lg-4 col-md-6">
 
@@ -302,34 +194,21 @@
 
                 <div class="member-card">
 
-
                     <div class="member-icon">
-
                         🏋
-
                     </div>
 
-
                     <h3>
-
                         Fitness Classes
-
                     </h3>
 
-
                     <p>
-
                         Browse available classes and reserve your place.
-
                     </p>
 
-
                     <span>
-
                         Browse Classes →
-
                     </span>
-
 
                 </div>
 
@@ -337,11 +216,6 @@
 
         </div>
 
-
-
-        <!-- =================================================
-             MY BOOKINGS
-             ================================================= -->
 
         <div class="col-lg-4 col-md-6">
 
@@ -350,50 +224,28 @@
 
                 <div class="member-card">
 
-
                     <div class="member-icon">
-
                         📅
-
                     </div>
 
-
                     <h3>
-
                         My Bookings
-
                     </h3>
 
-
                     <p>
-
                         You currently have
-
-                        <strong th:text="${activeBookings}">
-                            0
-                        </strong>
-
+                        <strong th:text="${activeBookings}">0</strong>
                         active booking(s).
-
 
                         <br>
 
-
                         Total booking history:
-
-                        <strong th:text="${totalBookings}">
-                            0
-                        </strong>
-
+                        <strong th:text="${totalBookings}">0</strong>
                     </p>
 
-
                     <span>
-
-                        View Bookings →
-
-                    </span>
-
+    View Bookings →
+</span>
 
                 </div>
 
@@ -401,11 +253,6 @@
 
         </div>
 
-
-
-        <!-- =================================================
-             FACILITY RENTALS
-             ================================================= -->
 
         <div class="col-lg-4 col-md-6">
 
@@ -414,34 +261,21 @@
 
                 <div class="member-card">
 
-
                     <div class="member-icon">
-
                         🏟
-
                     </div>
 
-
                     <h3>
-
                         Facility Rentals
-
                     </h3>
 
-
                     <p>
-
                         View or request bookings for available facilities.
-
                     </p>
 
-
                     <span>
-
                         View Rentals →
-
                     </span>
-
 
                 </div>
 
@@ -449,67 +283,31 @@
 
         </div>
 
-
-
-        <!-- =================================================
-             MEMBERSHIP STATUS
-             ================================================= -->
 
         <div class="col-lg-4 col-md-6">
 
-            <a th:href="@{/profile}"
-               class="member-card-link">
+            <div class="member-card">
 
-                <div class="member-card">
-
-
-                    <div class="member-icon">
-
-                        ✅
-
-                    </div>
-
-
-                    <h3>
-
-                        Membership Status
-
-                    </h3>
-
-
-                    <p>
-
-                        View your current account and membership status.
-
-                    </p>
-
-
-                    <span th:if="${member.membershipStatus != null}"
-                          th:text="${member.membershipStatus}">
-
-                        ACTIVE
-
-                    </span>
-
-
-                    <span th:if="${member.membershipStatus == null}">
-
-                        Not Verified
-
-                    </span>
-
-
+                <div class="member-icon">
+                    ✅
                 </div>
 
-            </a>
+                <h3>
+                    Membership Status
+                </h3>
+
+                <p>
+                    View your current account and membership status.
+                </p>
+
+                <span>
+                    Active Member
+                </span>
+
+            </div>
 
         </div>
 
-
-
-        <!-- =================================================
-             MAIN WEBSITE
-             ================================================= -->
 
         <div class="col-lg-4 col-md-6">
 
@@ -518,34 +316,21 @@
 
                 <div class="member-card">
 
-
                     <div class="member-icon">
-
                         🏠
-
                     </div>
 
-
                     <h3>
-
                         Main Website
-
                     </h3>
 
-
                     <p>
-
                         Return to the public USP Fitness Centre website.
-
                     </p>
 
-
                     <span>
-
                         Visit Website →
-
                     </span>
-
 
                 </div>
 
@@ -553,29 +338,17 @@
 
         </div>
 
-
     </div>
 
 
-
-    <!-- =================================================
-         QUICK ACTIONS
-         ================================================= -->
-
+    <!-- QUICK ACTIONS -->
     <div class="member-section">
 
-
         <h2>
-
             Quick Actions
-
         </h2>
 
-
         <div class="row g-3">
-
-
-            <!-- BOOK FITNESS CLASS -->
 
             <div class="col-md-4">
 
@@ -588,10 +361,6 @@
 
             </div>
 
-
-
-            <!-- CHECK BOOKINGS -->
-
             <div class="col-md-4">
 
                 <a th:href="@{/member/bookings}"
@@ -602,10 +371,6 @@
                 </a>
 
             </div>
-
-
-
-            <!-- PROFILE -->
 
             <div class="col-md-4">
 
@@ -618,27 +383,18 @@
 
             </div>
 
-
         </div>
 
     </div>
 
-
 </div>
 
-
-
-<!-- =====================================================
-     JAVASCRIPT
-     ===================================================== -->
 
 <script th:src="@{/webjars/bootstrap/5.3.8/js/bootstrap.bundle.min.js}">
 </script>
 
-
 <script th:src="@{/js/member-dashboard.js}">
 </script>
-<script th:src="@{/js/navbar-active.js}"></script>
 
 </body>
 
