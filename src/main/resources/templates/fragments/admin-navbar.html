@@ -3,53 +3,34 @@
 Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
 Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this template
 -->
-<!DOCTYPE html>
-
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 
 <body>
-
 
 <nav th:fragment="adminNavbar"
      class="navbar navbar-expand-lg navbar-dark bg-dark">
 
-
     <div class="container">
 
-
-        <!-- BRAND -->
-
         <a class="navbar-brand"
-           th:href="@{/dashboard}">
-
+           th:href="@{/members}">
             USP Fitness Club
-
         </a>
 
-
-
-        <!-- MOBILE BUTTON -->
 
         <button class="navbar-toggler"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#adminNavbar">
 
-            <span class="navbar-toggler-icon">
-            </span>
+            <span class="navbar-toggler-icon"></span>
 
         </button>
 
 
-
-        <!-- NAVBAR -->
-
         <div class="collapse navbar-collapse"
              id="adminNavbar">
 
-
-            <!-- LEFT SIDE -->
 
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
 
@@ -58,9 +39,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                     <a class="nav-link"
                        th:href="@{/members}">
-
                         Members
-
                     </a>
 
                 </li>
@@ -70,9 +49,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                     <a class="nav-link"
                        th:href="@{/trainers}">
-
                         Trainers
-
                     </a>
 
                 </li>
@@ -82,9 +59,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                     <a class="nav-link"
                        th:href="@{/fitness-classes}">
-
                         Fitness Classes
-
                     </a>
 
                 </li>
@@ -94,9 +69,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                     <a class="nav-link"
                        th:href="@{/admin/student-approvals}">
-
                         Student Approvals
-
                     </a>
 
                 </li>
@@ -106,9 +79,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                     <a class="nav-link"
                        th:href="@{/admin/facilities}">
-
                         Sports Facilities
-
                     </a>
 
                 </li>
@@ -118,21 +89,7 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
 
                     <a class="nav-link"
                        th:href="@{/admin/rentals}">
-
                         Facility Rentals
-
-                    </a>
-
-                </li>
-
-
-                <li class="nav-item">
-
-                    <a class="nav-link"
-                       th:href="@{/admin/admins}">
-
-                        Administrators
-
                     </a>
 
                 </li>
@@ -141,60 +98,25 @@ Click nbfs://nbhost/SystemFileSystem/Templates/Other/html.html to edit this temp
             </ul>
 
 
+            <form th:action="@{/logout}"
+                  method="post"
+                  class="d-flex">
 
-            <!-- RIGHT SIDE -->
+                <button type="submit"
+                        class="btn btn-outline-light">
 
-            <div class="d-flex
-                        align-items-center
-                        gap-3">
+                    Logout
 
+                </button>
 
-                <!-- CURRENT USER -->
-
-                <span class="navbar-text text-light">
-
-                    Logged in as:
-
-                    <strong sec:authentication="name">
-
-                        username
-
-                    </strong>
-
-                </span>
-
-
-
-                <!-- LOGOUT -->
-
-                <form th:action="@{/logout}"
-                      method="post"
-                      class="m-0">
-
-
-                    <button type="submit"
-                            class="btn btn-outline-light btn-sm">
-
-                        Logout
-
-                    </button>
-
-
-                </form>
-
-
-            </div>
+            </form>
 
 
         </div>
 
-
     </div>
-
 
 </nav>
 
-
 </body>
-
 </html>

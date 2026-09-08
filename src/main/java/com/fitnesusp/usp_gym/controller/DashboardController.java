@@ -28,7 +28,7 @@ public class DashboardController {
                         );
 
         if (isAdmin) {
-            return "redirect:/members";
+            return "redirect:/admin/dashboard";
         }
 
 
@@ -39,7 +39,7 @@ public class DashboardController {
                         );
 
         if (isMember) {
-            return "redirect:/profile";
+            return "redirect:/member/dashboard";
         }
 
 

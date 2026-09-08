@@ -61,12 +61,19 @@ public class SecurityConfig {
             )*/
             .authorizeHttpRequests(auth -> auth
 
-                .requestMatchers(
-                        "/login",
-                        "/register")
+                    .requestMatchers(
+                            "/",
+                            "/login",
+                            "/register",
+                            "/css/**",
+                            "/js/**",
+                            "/webjars/**"
+                    )
                     .permitAll()
 
                 .requestMatchers("/admin/**")
+                    .hasRole("ADMIN")
+                    .requestMatchers("/members/**")
                     .hasRole("ADMIN")
                     
                 .requestMatchers("/trainers/**")

@@ -1,0 +1,214 @@
+/* =====================================================
+   MEMBER DASHBOARD
+   ===================================================== */
+
+body {
+    background: #f5f7fb;
+    min-height: 100vh;
+}
+
+
+/* =====================================================
+   MAIN CONTAINER
+   ===================================================== */
+
+.member-dashboard-container {
+    padding-top: 45px;
+    padding-bottom: 70px;
+}
+
+
+/* =====================================================
+   HEADER
+   ===================================================== */
+
+.member-dashboard-header {
+    margin-bottom: 35px;
+}
+
+.member-dashboard-label {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 1.4px;
+    color: #0d6efd;
+    margin-bottom: 8px;
+}
+
+.member-dashboard-header h1 {
+    margin: 0;
+    font-size: 32px;
+    font-weight: 700;
+    color: #1f2937;
+}
+
+.member-dashboard-header p {
+    margin-top: 8px;
+    margin-bottom: 0;
+    color: #6b7280;
+}
+
+
+/* =====================================================
+   CARD LINKS
+   ===================================================== */
+
+.member-card-link {
+    text-decoration: none;
+    color: inherit;
+}
+
+.member-card-link:hover {
+    color: inherit;
+}
+
+
+/* =====================================================
+   MEMBER CARDS
+   ===================================================== */
+
+.member-card {
+    height: 100%;
+    background: #ffffff;
+    border: 1px solid #e6ebf1;
+    border-radius: 14px;
+    padding: 26px;
+
+    box-shadow:
+            0 4px 14px rgba(0, 0, 0, 0.05);
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease;
+}
+
+.member-card:hover {
+    transform: translateY(-4px);
+
+    box-shadow:
+            0 10px 24px rgba(0, 0, 0, 0.09);
+}
+
+.member-icon {
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #eef4ff;
+    border-radius: 12px;
+
+    font-size: 24px;
+
+    margin-bottom: 20px;
+}
+
+.member-card h3 {
+    font-size: 19px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 10px;
+}
+
+.member-card p {
+    min-height: 48px;
+    color: #6b7280;
+    font-size: 14px;
+    margin-bottom: 18px;
+}
+
+.member-card span {
+    font-size: 14px;
+    font-weight: 600;
+    color: #0d6efd;
+}
+
+
+/* =====================================================
+   QUICK ACTIONS
+   ===================================================== */
+
+.member-section {
+    margin-top: 50px;
+}
+
+.member-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 20px;
+}
+
+.member-quick-action {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 58px;
+
+    padding: 12px 18px;
+
+    background: #ffffff;
+
+    border: 1px solid #dce3eb;
+    border-radius: 10px;
+
+    text-decoration: none;
+
+    font-weight: 600;
+    color: #1f2937;
+
+    transition:
+            transform 0.2s ease,
+            box-shadow 0.2s ease,
+            background 0.2s ease;
+}
+
+.member-quick-action:hover {
+    color: #0d6efd;
+    background: #f8fbff;
+
+    transform: translateY(-2px);
+
+    box-shadow:
+            0 6px 15px rgba(0, 0, 0, 0.06);
+}
+
+
+/* =====================================================
+   NAVBAR ACTIVE LINK
+   ===================================================== */
+
+.navbar .nav-link.active {
+    color: #ffffff !important;
+    font-weight: 700;
+    border-bottom: 2px solid #ffffff;
+}
+
+
+/* =====================================================
+   RESPONSIVE
+   ===================================================== */
+
+@media (max-width: 768px) {
+
+    .member-dashboard-container {
+        padding-top: 28px;
+    }
+
+    .member-dashboard-header h1 {
+        font-size: 27px;
+    }
+
+}
+
+
+@media (max-width: 576px) {
+
+    .member-card {
+        padding: 21px;
+    }
+
+}
