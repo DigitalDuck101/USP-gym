@@ -48,6 +48,36 @@ public class RegistrationService {
             String password) {
 
 
+        if (username == null || username.isBlank()) {
+
+            throw new IllegalStateException( "Username is required.");
+        }
+
+        if (password == null || password.isBlank()) {
+
+            throw new IllegalStateException( "Password is required.");
+        }
+
+        if (member.getFirstName() == null || member.getFirstName().isBlank()) {
+
+            throw new IllegalStateException( "First name is required.");
+        }
+
+        if (member.getLastName() == null || member.getLastName().isBlank()) {
+
+            throw new IllegalStateException( "Last name is required.");
+        }
+
+        if (member.getEmail() == null || member.getEmail().isBlank()) {
+
+            throw new IllegalStateException( "Email is required.");
+        }
+
+        if (!member.getEmail().matches("^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$")) {
+
+            throw new IllegalStateException( "A valid email address is required.");
+        }
+
         if (appUserRepository.existsByUsername(username)) {
 
             throw new IllegalStateException( "Username already exists.");
